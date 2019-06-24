@@ -1,0 +1,72 @@
+scalar Date
+
+interface Entity {
+  id: ID!
+}
+
+type Event implements Entity {
+  id: ID!
+  name: String!
+  description: String
+  dateCreated: Date!
+}
+
+input CreateEventInput {
+  name: String!
+  description: String
+}
+
+input UpdateEventInput {
+  name: String
+  description: String
+}
+
+type Query {
+  allEvents: [Event!]!
+}
+
+type Mutation {
+  createEvent(input: CreateEventInput!): Event!,
+  deleteEvent(id: String!): Event,
+  updateEvent(id: String!, input: UpdateEventInput!): Event
+}
+
+# type Person implements Entity {
+#   id: ID!
+#   name: String!
+#   nickName: String
+#   phoneNumber: String
+#   externalIdentifier: String
+#   address: String!
+#   dateCreated: Date!
+#   deleted: Boolean!
+# }
+
+# type Item implements Entity {
+#   id: ID!
+#   description: String
+#   externalIdentifier: String
+#   owner: Person!
+#   dateCreated: Date!
+# }
+
+# type Transaction implements Entity {
+#   id: ID!
+#   event: Event!
+#   item: Item!
+#   buyer: Person!
+#   amount: Float!
+#   isDonated: Boolean!
+#   isPayed: Boolean!
+#   isLastBuyer: Boolean!
+#   dateCreated: Date!
+#   paymentMethod: PaymentMethods
+#   paymentReference: String
+#   paymentDate: Date
+# }
+
+# enum PaymentMethods {
+#   CASH,
+#   DEPOSIT,
+#   MONEY_CHECK
+# }
