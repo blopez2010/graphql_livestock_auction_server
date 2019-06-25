@@ -1,5 +1,12 @@
 const EventsModel = require('../models/event.model');
+const { raw } = require('objection');
 
 module.exports = {
-  allEvents: async (parent, args) => await EventsModel.query()
-}
+  allEvents: (parent, args) => EventsModel.query(),
+  getEventByYear: (parent, { year }) =>
+    EventsModel.query()
+      .where(raw('YEAR(dateCreated)'), '=', year)
+      .then(result => {
+        return result[0];
+      })
+};

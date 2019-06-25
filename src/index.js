@@ -36,9 +36,9 @@ const resolvers = {
   Date: new GraphQLScalarType({
     name: 'Date',
     description: 'A valid date value',
-    serialize: value => value.substring(0, 10),
-    parseValue: value => new Date(value).toISOString(),
-    parseLiteral: literal => new Date(literal.value).toISOString()
+    serialize: value => value,
+    parseValue: value => new Date(value).toUTCString(),
+    parseLiteral: literal => new Date(literal.value).toUTCString()
   })
 };
 

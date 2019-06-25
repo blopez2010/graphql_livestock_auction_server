@@ -14,6 +14,7 @@ type Event implements Entity {
 input CreateEventInput {
   name: String!
   description: String
+  year: String!
 }
 
 input UpdateEventInput {
@@ -21,12 +22,27 @@ input UpdateEventInput {
   description: String
 }
 
+type Error {
+  message: String!
+  status: Int!
+}
+
+interface PayloadBase {
+  error: Error
+}
+
+type CreateEventPayload implements PayloadBase {
+  event: Event
+  error: Error
+}
+
 type Query {
-  allEvents: [Event!]!
+  allEvents: [Event!]!,
+  getEventByYear(year: String!): Event
 }
 
 type Mutation {
-  createEvent(input: CreateEventInput!): Event!,
+  createEvent(input: CreateEventInput!): CreateEventPayload,
   deleteEvent(id: String!): Event,
   updateEvent(id: String!, input: UpdateEventInput!): Event
 }
