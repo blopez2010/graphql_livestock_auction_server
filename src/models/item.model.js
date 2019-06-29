@@ -2,22 +2,31 @@ const BaseModel = require('./base.model');
 const { v4 } = require('uuid');
 const Person = require('./person.model');
 const Transaction = require('./transaction.model');
+const Event = require('./event.model');
 
 class Item extends BaseModel {
   static get tableName() {
-    return 'events';
+    return 'items';
   }
 
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['ownerId', 'dateCreated'],
+      required: ['ownerId', 'ordinal'],
 
       properties: {
         id: {
           type: 'string',
           minLength: 1,
           maxLength: 36
+        },
+        eventId: {
+          type: 'string',
+          minLength: 1,
+          maxLength: 36
+        },
+        ordinal: {
+          type: 'integer'
         },
         description: {
           type: 'string',
@@ -49,6 +58,14 @@ class Item extends BaseModel {
         join: {
           from: 'items.ownerId',
           to: 'persons.id'
+        }
+      },
+      events: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: Event,
+        join: {
+          from: 'items.eventId',
+          to: 'events.id'
         }
       },
       transactions: {

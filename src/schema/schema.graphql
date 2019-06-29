@@ -1,14 +1,23 @@
 scalar Date
 
-interface Entity {
-  id: ID!
+type Query {
+  allEvents: [Event!]!
+  getEventByYear(year: String!): Event
+  allPersons: [Person!]!
+  filterPersonByName(name: String!): [Person!]!
+  allItems: [Item!]!
+  getItemByOrdinal(ordinal: Int!, eventId: String!): Item!
+  getItemsByOwner(ownerId: String!): [Item!]!
 }
 
-type Event implements Entity {
-  id: ID!
-  name: String!
-  description: String
-  dateCreated: Date!
+type Mutation {
+  createEvent(input: CreateEventInput!): CreateEventPayload
+  deleteEvent(id: String!): Event
+  updateEvent(id: String!, input: UpdateEventInput!): Event
+  createPerson(input: CreatePersonInput!): CreatePersonPayload
+  updatePerson(id: String!, input: UpdatePersonInput): Person
+  createItem(input: CreateItemInput!): CreateItemPayload
+  updateItem(id: String!, input: UpdateItemInput!): Item
 }
 
 input CreateEventInput {
@@ -22,6 +31,21 @@ input UpdateEventInput {
   description: String
 }
 
+input CreateItemInput {
+  eventId: String!
+  description: String
+  externalIdentifier: String
+  ownerId: String!
+}
+
+input UpdateItemInput {
+  eventId: String
+  description: String
+  externalIdentifier: String
+  ownerId: String
+  ordinal: Int
+}
+
 type Error {
   message: String!
   status: Int!
@@ -31,40 +55,68 @@ interface PayloadBase {
   error: Error
 }
 
+input UpdatePersonInput {
+  name: String
+  nickname: String
+  phoneNumber: String
+  externalIdentifier: String
+  address: String
+}
+
+input CreatePersonInput {
+  name: String!
+  nickname: String
+  phoneNumber: String
+  externalIdentifier: String
+  address: String!
+}
+
 type CreateEventPayload implements PayloadBase {
-  event: Event
+  data: Event
   error: Error
 }
 
-type Query {
-  allEvents: [Event!]!,
-  getEventByYear(year: String!): Event
+type CreatePersonPayload implements PayloadBase {
+  data: Person
+  error: Error
 }
 
-type Mutation {
-  createEvent(input: CreateEventInput!): CreateEventPayload,
-  deleteEvent(id: String!): Event,
-  updateEvent(id: String!, input: UpdateEventInput!): Event
+type CreateItemPayload implements PayloadBase {
+  data: Item
+  error: Error
 }
 
-# type Person implements Entity {
-#   id: ID!
-#   name: String!
-#   nickName: String
-#   phoneNumber: String
-#   externalIdentifier: String
-#   address: String!
-#   dateCreated: Date!
-#   deleted: Boolean!
-# }
+interface Entity {
+  id: ID!
+}
 
-# type Item implements Entity {
-#   id: ID!
-#   description: String
-#   externalIdentifier: String
-#   owner: Person!
-#   dateCreated: Date!
-# }
+type Event implements Entity {
+  id: ID!
+  name: String!
+  event: Event!
+  description: String
+  dateCreated: Date!
+}
+
+type Person implements Entity {
+  id: ID!
+  name: String!
+  nickname: String
+  phoneNumber: String
+  externalIdentifier: String
+  address: String!
+  dateCreated: Date!
+}
+
+type Item implements Entity {
+  id: ID!
+  event: Event!
+  ordinal: Int!
+  description: String
+  externalIdentifier: String
+  owner: Person!
+  dateCreated: Date!
+}
 
 # type Transaction implements Entity {
 #   id: ID!

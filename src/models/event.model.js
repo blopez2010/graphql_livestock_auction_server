@@ -1,6 +1,7 @@
 const BaseModel = require('./base.model');
 const { v4 } = require('uuid');
 const Transaction = require('./transaction.model');
+const Item = require('./item.model');
 
 class Event extends BaseModel {
   static get tableName() {
@@ -39,12 +40,20 @@ class Event extends BaseModel {
 
   static get relationMappings() {
     return {
-      logins: {
+      transactions: {
         relation: BaseModel.HasManyRelation,
         modelClass: Transaction,
         join: {
           from: 'events.id',
           to: 'transactions.eventId'
+        }
+      },
+      items: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: Item,
+        join: {
+          from: 'events.id',
+          to: 'items.eventId'
         }
       }
     };

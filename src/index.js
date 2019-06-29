@@ -9,6 +9,7 @@ const path = require('path');
 
 const mutations = require('./resolvers');
 const queries = require('./queries');
+const { Item } = require('./types');
 
 let knex;
 
@@ -33,6 +34,7 @@ const resolvers = {
   Mutation: {
     ...mutations
   },
+  ...Item,
   Date: new GraphQLScalarType({
     name: 'Date',
     description: 'A valid date value',

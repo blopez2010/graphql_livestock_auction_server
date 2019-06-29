@@ -1,5 +1,4 @@
 const EventModel = require('../models/event.model');
-const ApiError = require('../utils/apiError');
 const { raw } = require('objection');
 
 module.exports = {

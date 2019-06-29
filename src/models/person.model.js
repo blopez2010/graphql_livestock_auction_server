@@ -5,13 +5,13 @@ const Transaction = require('./transaction.model');
 
 class Person extends BaseModel {
   static get tableName() {
-    return 'events';
+    return 'persons';
   }
 
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['name', 'dateCreated', 'isBanned'],
+      required: ['name'],
 
       properties: {
         id: {
@@ -82,6 +82,8 @@ class Person extends BaseModel {
 
   async $beforeInsert(queryContext) {
     this.id = v4();
+    this.dateCreated = new Date();
+    this.isBanned = false;
     await super.$afterInsert(queryContext);
   }
 }
