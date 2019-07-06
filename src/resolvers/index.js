@@ -1,12 +1,17 @@
 const { createEvent, deleteEvent, updateEvent } = require('./events');
-const { createPerson, updatePerson } = require('./persons');
-const { createItem } = require('./items');
+const { createPeople, updatePeople } = require('./people');
+const { createItem, updateItem } = require('./items');
+const { createTransaction, updateTransaction, payTransaction } = require('./transactions');
 
 module.exports = {
   createEvent,
   deleteEvent,
   updateEvent,
-  createPerson,
-  updatePerson,
-  createItem
+  createPeople,
+  updatePeople,
+  // createItem,
+  // updateItem,
+  // createTransaction,
+  // updateTransaction,
+  // payTransaction
 };

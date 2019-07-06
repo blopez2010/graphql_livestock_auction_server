@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "build": "webpack --entry ./app/public/js/index.js --output-filename bundle.min.js --output-path ./app/public/js ",
+    "sequelize-skeleton": "./node_modules/sequelize-cli/lib/sequelize init:models; ./node_modules/sequelize-cli/lib/sequelize init:config",
     "start": "cross-env NODE_ENV=development pm2 start ./src/index.js",
     "dev": "nodemon ./src/index.js",
     "docker:start": "cross-env NODE_ENV=development pm2-docker start ./src/index.js",
@@ -8,20 +10,27 @@
   },
   "dependencies": {
     "apollo-server": "^2.6.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
     "graphql": "^14.3.1",
     "graphql-import": "^0.7.1",
-    "knex": "^0.17.6",
+    "moment": "^2.24.0",
     "mysql": "^2.17.1",
-    "objection": "^1.6.9",
-    "uuid": "^3.3.2"
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.9.4",
+    "sequelize-cli": "^5.5.0",
+    "uuid": "^3.3.2",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5"
   },
   "devDependencies": {
     "@playlyfe/gql": "^2.6.1",
-    "nodemon": "^1.19.1",
     "eslint": "^6.0.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.3"
+    "eslint-plugin-import": "^2.17.3",
+    "nodemon": "^1.19.1"
   }
 }

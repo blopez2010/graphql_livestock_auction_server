@@ -1,13 +1,14 @@
-const EventModel = require('../models/event.model');
-const { raw } = require('objection');
+const db = require('../models');
+const sequelize = require('sequelize');
 
 module.exports = {
   createEvent: async (parent, { input }) => {
-    const events = await EventModel.query().where(
-      raw('YEAR(dateCreated)'),
-      '=',
-      input.year
-    );
+    const events = await db.event.findAll({
+      where: sequelize.where(
+        sequelize.fn('YEAR', sequelize.col('createdAt')),
+        input.year
+      )
+    });
 
     if (events && events.length > 0) {
       return {
@@ -16,26 +17,21 @@ module.exports = {
           status: 400
         }
       };
-    } else {
-      const newEvent = await EventModel.query().insert({
-        ...input,
-        dateCreated: new Date()
-      });
-
-      return {
-        event: newEvent
-      };
     }
+
+    return await db.event.create(input).then(data => ({
+      data
+    }));
   },
   deleteEvent: (parent, { id }) => {
-    return EventModel.query().findById(id).then(result => {
+    return db.event.findOne({ where: { id } }).then(result => {
       if (!result) {
         return null;
       }
-      return EventModel.query().deleteById(id).then(() => ({ id }));
+      return db.event.destroy({ where: { id } }).then(() => ({ id }));
     });
   },
   updateEvent: async (parent, { id, input }) => {
-    return await EventModel.query().patchAndFetchById(id, input);
+    return await db.event.update(input, { where: { id } });
   }
 };

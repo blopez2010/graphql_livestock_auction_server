@@ -1,5 +1,11 @@
 {
   "globalDependencies": {
+    "moment": "registry:dt/moment#2.11.1+20161010105546",
     "uuid": "registry:dt/uuid#3.3.0+20160728152600"
+  },
+  "dependencies": {
+    "sequelize": "registry:npm/sequelize#4.0.0+20170801015413",
+    "sequelize-fixtures": "registry:dt/sequelize-fixtures#0.4.7+20170322192047",
+    "sequelize/v3": "registry:dt/sequelize/v3#3.4.1+20170322192047"
   }
 }

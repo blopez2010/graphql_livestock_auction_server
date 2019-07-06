@@ -1,12 +1,13 @@
-const EventsModel = require('../models/event.model');
-const { raw } = require('objection');
+const db = require('../models');
+const sequelize = require('sequelize');
 
 module.exports = {
-  allEvents: (parent, args) => EventsModel.query(),
+  allEvents: (parent, args) => db.event.findAll(),
   getEventByYear: (parent, { year }) =>
-    EventsModel.query()
-      .where(raw('YEAR(dateCreated)'), '=', year)
-      .then(result => {
-        return result[0];
-      })
+    db.event.findOne({
+      where: sequelize.where(
+        sequelize.fn('YEAR', sequelize.col('createdAt')),
+        year
+      )
+    })
 };

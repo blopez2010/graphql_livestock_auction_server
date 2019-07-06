@@ -1,13 +1,23 @@
 const { allEvents, getEventByYear } = require('./events');
-const { allPersons, filterPersonByName } = require('./persons');
+const { allPeople, findPeopleByName } = require('./people');
 const { allItems, getItemByOrdinal, getItemsByOwner } = require('./items');
+const {
+  allTransactions,
+  getTransactionsByBuyer,
+  getTransactionsByEvent,
+  getTotalsByEvent
+} = require('./transactions');
 
 module.exports = {
   allEvents,
   getEventByYear,
-  allPersons,
-  filterPersonByName,
-  allItems,
-  getItemByOrdinal,
-  getItemsByOwner
+  allPeople,
+  findPeopleByName,
+  // allItems,
+  // getItemByOrdinal,
+  // getItemsByOwner,
+  // allTransactions,
+  // getTransactionsByBuyer,
+  // getTransactionsByEvent,
+  // getTotalsByEvent
 };

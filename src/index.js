@@ -1,31 +1,12 @@
 const { ApolloServer, makeExecutableSchema } = require('apollo-server');
 const { importSchema } = require('graphql-import');
 const { GraphQLScalarType } = require('graphql');
-const Knex = require('knex');
-const config = require('../config');
-const { Model } = require('objection');
 require('dotenv').config();
 const path = require('path');
 
 const mutations = require('./resolvers');
 const queries = require('./queries');
-const { Item } = require('./types');
-
-let knex;
-
-switch (process.env.NODE_ENV) {
-  case 'production':
-    knex = Knex(config.knex.production);
-    break;
-  default:
-    knex = Knex(config.knex.local);
-    break;
-}
-
-// Bind all Models to a knex instance. If you only have one database in
-// your server this is all you have to do. For multi database systems, see
-// the Model.bindKnex method.
-Model.knex(knex);
+const { Item, Transaction } = require('./types');
 
 const resolvers = {
   Query: {
@@ -35,6 +16,7 @@ const resolvers = {
     ...mutations
   },
   ...Item,
+  ...Transaction,
   Date: new GraphQLScalarType({
     name: 'Date',
     description: 'A valid date value',

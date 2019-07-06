@@ -3,21 +3,28 @@ scalar Date
 type Query {
   allEvents: [Event!]!
   getEventByYear(year: String!): Event
-  allPersons: [Person!]!
-  filterPersonByName(name: String!): [Person!]!
+  allPeople: [People!]!
+  findPeopleByName(name: String!): [People!]!
   allItems: [Item!]!
   getItemByOrdinal(ordinal: Int!, eventId: String!): Item!
   getItemsByOwner(ownerId: String!): [Item!]!
+  allTransactions: [Transaction!]!
+  getTransactionsByBuyer(name: String!): [Transaction!]!
+  getTransactionsByEvent(eventId: String!): [Transaction!]!
+  getTotalsByEvent(eventId: String!): Float!
 }
 
 type Mutation {
   createEvent(input: CreateEventInput!): CreateEventPayload
   deleteEvent(id: String!): Event
   updateEvent(id: String!, input: UpdateEventInput!): Event
-  createPerson(input: CreatePersonInput!): CreatePersonPayload
-  updatePerson(id: String!, input: UpdatePersonInput): Person
+  createPeople(input: CreatePeopleInput!): CreatePeoplePayload
+  updatePeople(id: String!, input: UpdatePeopleInput): People
   createItem(input: CreateItemInput!): CreateItemPayload
   updateItem(id: String!, input: UpdateItemInput!): Item
+  createTransaction(input: CreateTransactionInput!): CreateTransactionPayload
+  updateTransaction(id: String!, input: UpdateTransactionInput!): Transaction
+  payTransaction(id: String!, input: PayTransactionInput!): Transaction
 }
 
 input CreateEventInput {
@@ -55,7 +62,7 @@ interface PayloadBase {
   error: Error
 }
 
-input UpdatePersonInput {
+input UpdatePeopleInput {
   name: String
   nickname: String
   phoneNumber: String
@@ -63,7 +70,7 @@ input UpdatePersonInput {
   address: String
 }
 
-input CreatePersonInput {
+input CreatePeopleInput {
   name: String!
   nickname: String
   phoneNumber: String
@@ -71,18 +78,48 @@ input CreatePersonInput {
   address: String!
 }
 
+input CreateTransactionInput {
+  eventId: String!
+  itemId: String!
+  buyerId: String!
+  amount: Float!
+  isDonated: Boolean!
+  isLastBuyer: Boolean!
+}
+
+input PayTransactionInput {
+  paymentDate: Date
+  paymentMethod: PaymentMethods
+  paymentReference: String
+}
+
+input UpdateTransactionInput {
+  eventId: String
+  itemId: String
+  buyerId: String
+  amount: Float
+  paymentDate: Date
+  isDonated: Boolean
+  isLastBuyer: Boolean
+}
+
 type CreateEventPayload implements PayloadBase {
   data: Event
   error: Error
 }
 
-type CreatePersonPayload implements PayloadBase {
-  data: Person
+type CreatePeoplePayload implements PayloadBase {
+  data: People
   error: Error
 }
 
 type CreateItemPayload implements PayloadBase {
   data: Item
+  error: Error
+}
+
+type CreateTransactionPayload implements PayloadBase {
+  data: Transaction
   error: Error
 }
 
@@ -93,19 +130,22 @@ interface Entity {
 type Event implements Entity {
   id: ID!
   name: String!
-  event: Event!
   description: String
-  dateCreated: Date!
+  createdAt: Date
+  updatedAt: Date
 }
 
-type Person implements Entity {
+type People implements Entity {
   id: ID!
   name: String!
   nickname: String
   phoneNumber: String
   externalIdentifier: String
   address: String!
-  dateCreated: Date!
+  isBanned: Boolean!
+  bannedDescription: String
+  createdAt: Date
+  updatedAt: Date
 }
 
 type Item implements Entity {
@@ -114,27 +154,29 @@ type Item implements Entity {
   ordinal: Int!
   description: String
   externalIdentifier: String
-  owner: Person!
-  dateCreated: Date!
+  owner: People!
+  createdAt: Date
+  updatedAt: Date
 }
 
-# type Transaction implements Entity {
-#   id: ID!
-#   event: Event!
-#   item: Item!
-#   buyer: Person!
-#   amount: Float!
-#   isDonated: Boolean!
-#   isPayed: Boolean!
-#   isLastBuyer: Boolean!
-#   dateCreated: Date!
-#   paymentMethod: PaymentMethods
-#   paymentReference: String
-#   paymentDate: Date
-# }
+type Transaction implements Entity {
+  id: ID!
+  event: Event!
+  item: Item!
+  buyer: People!
+  amount: Float!
+  isDonated: Boolean!
+  isPayed: Boolean!
+  isLastBuyer: Boolean!
+  paymentMethod: PaymentMethods
+  paymentReference: String
+  paymentDate: Date
+  createdAt: Date
+  updatedAt: Date
+}
 
-# enum PaymentMethods {
-#   CASH,
-#   DEPOSIT,
-#   MONEY_CHECK
-# }
+enum PaymentMethods {
+  CASH
+  DEPOSIT
+  MONEY_CHECK
+}
