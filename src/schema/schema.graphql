@@ -25,6 +25,17 @@ type Mutation {
   createTransaction(input: CreateTransactionInput!): CreateTransactionPayload
   updateTransaction(id: String!, input: UpdateTransactionInput!): Transaction
   payTransaction(id: String!, input: PayTransactionInput!): Transaction
+  login(input: LoginInput!): LoginPayload
+}
+
+input LoginInput {
+  user: String!
+  password: String!
+}
+
+type LoginPayload {
+  user: String!
+  token: String!
 }
 
 input CreateEventInput {

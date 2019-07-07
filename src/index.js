@@ -1,6 +1,7 @@
 const { ApolloServer, makeExecutableSchema } = require('apollo-server');
 const { importSchema } = require('graphql-import');
 const { GraphQLScalarType } = require('graphql');
+const { verify } = require('jsonwebtoken');
 require('dotenv').config();
 const path = require('path');
 
@@ -37,10 +38,15 @@ const schema = makeExecutableSchema({
 const server = new ApolloServer({
   schema,
   context: ({ req }) => {
-    const key = req.headers.authorization;
+    const key = req.headers['public-key'];
+    const token = req.headers.authorization;
 
-    if (!key && key !== process.env.publicKey) {
+    if (!key || key !== process.env.publicKey) {
       throw new Error('Public Key is not valid');
+    }
+
+    if (!token || !verify(token, process.env.privateKey, {})) {
+      throw new Error('Unauthorized');
     }
   }
 });
