@@ -1,6 +1,4 @@
-const EventModel = require('../models/event.model');
-const PersonModel = require('../models/person.model');
-const ItemModel = require('../models/item.model');
+const db = require('../models');
 
 module.exports = {
   Transaction: {
@@ -9,21 +7,33 @@ module.exports = {
         return;
       }
 
-      return EventModel.query().findById(source.eventId);
+      return db.event.findOne({
+        where: {
+          id: source.eventId
+        }
+      });
     },
     buyer(source) {
       if (!source.buyerId) {
         return;
       }
 
-      return PersonModel.query().findById(source.buyerId);
+      return db.people.findOne({
+        where: {
+          id: source.buyerId
+        }
+      });
     },
     item(source) {
       if (!source.itemId) {
         return;
       }
 
-      return ItemModel.query().findById(source.itemId);
+      return db.item.findOne({
+        where: {
+          id: source.itemId
+        }
+      });
     }
   }
 };

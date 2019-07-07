@@ -1,58 +1,112 @@
-// const TransactionModel = require('../models/transaction.model');
-// const moment = require('moment');
+const db = require('../models');
+const sequelize = require('sequelize');
+const moment = require('moment');
 
-// module.exports = {
-//   createTransaction: async (parent, { input }) => {
-//     const result = await TransactionModel.query().findOne({
-//       itemId: input.itemId
-//     });
-//     if (result) {
-//       return {
-//         error: {
-//           message: 'Item is already taken',
-//           status: 400
-//         }
-//       };
-//     }
+const attributes = [
+  'id',
+  'amount',
+  'isDonated',
+  'isPayed',
+  'isLastBuyer',
+  'paymentMethod',
+  'paymentReference',
+  'paymentDate',
+  'createdAt',
+  'updatedAt',
+  'eventId',
+  'itemId'
+];
 
-//     return TransactionModel.query()
-//       .insert(input)
-//       .then(result => ({
-//         data: result
-//       }))
-//       .catch(error => ({
-//         error
-//       }));
-//   },
-//   updateTransaction: async (parent, { id, input }) => {
-//     const result = await TransactionModel.query().findOne({
-//       itemId: input.itemId
-//     });
+module.exports = {
+  createTransaction: async (parent, { input }) => {
+    const result = await db.transaction.findOne({
+      attributes,
+      where: {
+        itemId: input.itemId
+      }
+    });
+    if (result) {
+      return {
+        error: {
+          message: 'Item is already taken',
+          status: 400
+        }
+      };
+    }
 
-//     if (result && result.buyerId !== input.buyerId) {
-//       return {
-//         error: {
-//           message: 'Item was already bought by another person',
-//           status: 400
-//         }
-//       };
-//     }
+    return db.transaction
+      .create(input)
+      .then(result => ({
+        data: result
+      }))
+      .catch(error => ({
+        error
+      }));
+  },
+  updateTransaction: async (parent, { id, input }) => {
+    const result = await db.transaction.findOne({
+      attributes,
+      where: {
+        itemId: input.itemId
+      }
+    });
 
-//     if (result.isLastBuyer) {
-//       return {
-//         error: {
-//           message: 'Item was already bought by another person',
-//           status: 400
-//         }
-//       };
-//     }
+    if (result && result.buyerId !== input.buyerId) {
+      return {
+        error: {
+          message: 'Item was already bought by another person',
+          status: 400
+        }
+      };
+    }
 
-//     return TransactionModel.query().patchAndFetchById(id, input);
-//   },
-//   payTransaction: async (parent, { id, input }) => {
-//     if (input.paymentDate) {
-//       input.paymentDate = moment(input.paymentDate).toDate();
-//     }
-//     return await TransactionModel.query().patchAndFetchById(id, input);
-//   }
-// };
+    if (result.isLastBuyer) {
+      return {
+        error: {
+          message: 'Item was already bought by another person',
+          status: 400
+        }
+      };
+    }
+
+    const updateResult = await db.transaction.update(input, { where: { id } });
+
+    if (
+      typeof result === 'object' &&
+      !!updateResult[0] &&
+      typeof updateResult[0] === 'number' &&
+      updateResult[0] > 0
+    ) {
+      return await db.transaction.findOne({
+        attributes,
+        where: {
+          id
+        }
+      });
+    }
+
+    return null;
+  },
+  payTransaction: async (parent, { id, input }) => {
+    if (input.paymentDate) {
+      input.paymentDate = moment(input.paymentDate).toDate();
+    }
+
+    const result = await db.transaction.update(input, { where: { id } });
+    if (
+      typeof result === 'object' &&
+      !!result[0] &&
+      typeof result[0] === 'number' &&
+      result[0] > 0
+    ) {
+      return await db.transaction.findOne({
+        attributes,
+        where: {
+          id
+        }
+      });
+    }
+
+    return null;
+  }
+};

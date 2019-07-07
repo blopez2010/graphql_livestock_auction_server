@@ -1,24 +1,20 @@
-// const ItemModel = require('../models/item.model');
+const db = require('../models');
 
-// module.exports = {
-//   createItem: async (parent, { input }) => {
-//     const maxOrdinal = await ItemModel.query().max('ordinal');
-//     const ordinalValue = Object.keys(maxOrdinal[0]).map(
-//       key => maxOrdinal[0][key]
-//     )[0];
+module.exports = {
+  createItem: async (parent, { input }) => {
+    const maxOrdinal = await db.item.max('ordinal');
 
-//     const result = await ItemModel.query()
-//       .insert({ ...input, ordinal: ordinalValue ? ordinalValue + 1 : 1 })
-//       .then(item => ({
-//         data: item
-//       }))
-//       .catch(error => ({
-//         error
-//       }));
+    const result = await db.item
+      .create({ ...input, ordinal: maxOrdinal + 1 })
+      .then(item => ({
+        data: item
+      }))
+      .catch(error => ({
+        error
+      }));
 
-//     return result;
-//   },
-//   updateItem: (parent, { id, input }) => {
-//     return ItemModel.query().patchAndFetchById(id, input);
-//   }
-// };
+    return result;
+  },
+  updateItem: (parent, { id, input }) =>
+    db.item.update(input, { where: { id } })
+};

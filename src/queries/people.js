@@ -1,6 +1,6 @@
 const db = require('../models');
 const sequelize = require('sequelize');
-const Op = sequelize.Op
+const Op = sequelize.Op;
 
 module.exports = {
   allPeople: (parent, args) => db.people.findAll(),
@@ -15,8 +15,4 @@ module.exports = {
 
     return result;
   }
-  // filterPersonByName: (parent, { name }) => {
-
-  //   return PersonModel.query().where('name', 'like', `%${name.trim()}%`);
-  // }
 };

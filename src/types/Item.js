@@ -1,5 +1,4 @@
-const EventModel = require('../models/event.model');
-const PersonModel = require('../models/person.model');
+const db = require('../models');
 
 module.exports = {
   Item: {
@@ -8,14 +7,22 @@ module.exports = {
         return;
       }
 
-      return EventModel.query().findById(source.eventId);
+      return db.event.findOne({
+        where: {
+          id: source.eventId
+        }
+      });
     },
     owner(source) {
       if (!source.ownerId) {
         return;
       }
 
-      return PersonModel.query().findById(source.ownerId);
+      return db.people.findOne({
+        where: {
+          id: source.ownerId
+        }
+      });
     }
   }
 };

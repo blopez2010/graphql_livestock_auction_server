@@ -1,7 +1,7 @@
-// const Item = require('./item');
-// const Transaction = require('./transaction');
+const Item = require('./item');
+const Transaction = require('./transaction');
 
-// module.exports = {
-//   Item,
-//   Transaction
-// };
+module.exports = {
+  Item,
+  Transaction
+};

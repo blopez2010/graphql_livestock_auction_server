@@ -13,11 +13,11 @@ module.exports = {
   getEventByYear,
   allPeople,
   findPeopleByName,
-  // allItems,
-  // getItemByOrdinal,
-  // getItemsByOwner,
-  // allTransactions,
-  // getTransactionsByBuyer,
-  // getTransactionsByEvent,
-  // getTotalsByEvent
+  allItems,
+  getItemByOrdinal,
+  getItemsByOwner,
+  allTransactions,
+  getTransactionsByBuyer,
+  getTransactionsByEvent,
+  getTotalsByEvent
 };

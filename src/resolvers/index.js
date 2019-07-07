@@ -9,9 +9,9 @@ module.exports = {
   updateEvent,
   createPeople,
   updatePeople,
-  // createItem,
-  // updateItem,
-  // createTransaction,
-  // updateTransaction,
-  // payTransaction
+  createItem,
+  updateItem,
+  createTransaction,
+  updateTransaction,
+  payTransaction
 };
