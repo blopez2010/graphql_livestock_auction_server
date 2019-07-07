@@ -1,4 +1,5 @@
 const db = require('../models');
+const { itemsAttributes: attributes } = require('../constants');
 
 module.exports = {
   Transaction: {
@@ -30,6 +31,7 @@ module.exports = {
       }
 
       return db.item.findOne({
+        attributes,
         where: {
           id: source.itemId
         }

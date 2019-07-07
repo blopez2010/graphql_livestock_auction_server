@@ -14,7 +14,8 @@ const attributes = [
   'createdAt',
   'updatedAt',
   'eventId',
-  'itemId'
+  'itemId',
+  'buyerId'
 ];
 
 module.exports = {

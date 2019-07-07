@@ -1,4 +1,5 @@
 const db = require('../models');
+const { itemsAttributes: attributes } = require('../constants');
 
 module.exports = {
   Item: {
@@ -8,6 +9,7 @@ module.exports = {
       }
 
       return db.event.findOne({
+        attributes,
         where: {
           id: source.eventId
         }

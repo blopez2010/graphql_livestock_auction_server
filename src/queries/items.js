@@ -1,14 +1,5 @@
 const db = require('../models');
-const attributes = [
-  'id',
-  'ownerId',
-  'ordinal',
-  'description',
-  'externalIdentifier',
-  'createdAt',
-  'updatedAt',
-  'eventId'
-];
+const { itemsAttributes: attributes } = require('../constants');
 
 module.exports = {
   allItems: (parent, args) => db.item.findAll({ attributes }),
