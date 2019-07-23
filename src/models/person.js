@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     isBanned: DataTypes.BOOLEAN,
     bannedDescription: DataTypes.STRING,
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    updatedAt: DataTypes.DATE,
+    personId: DataTypes.NUMBER
   }, {});
 
   people.associate = (models) => {

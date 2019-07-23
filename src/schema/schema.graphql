@@ -41,7 +41,7 @@ type LoginPayload {
 input CreateEventInput {
   name: String!
   description: String
-  year: String!
+  year: Int!
 }
 
 input UpdateEventInput {
@@ -78,7 +78,9 @@ input UpdatePeopleInput {
   nickname: String
   phoneNumber: String
   externalIdentifier: String
-  address: String
+  address: String,
+  isBanned: Boolean
+  bannedDescription: String
 }
 
 input CreatePeopleInput {
@@ -87,6 +89,8 @@ input CreatePeopleInput {
   phoneNumber: String
   externalIdentifier: String
   address: String!
+  isBanned: Boolean,
+  bannedDescription: String
 }
 
 input CreateTransactionInput {
@@ -136,6 +140,8 @@ type CreateTransactionPayload implements PayloadBase {
 
 interface Entity {
   id: ID!
+  createdAt: Date
+  updatedAt: Date
 }
 
 type Event implements Entity {

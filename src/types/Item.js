@@ -9,7 +9,6 @@ module.exports = {
       }
 
       return db.event.findOne({
-        attributes,
         where: {
           id: source.eventId
         }

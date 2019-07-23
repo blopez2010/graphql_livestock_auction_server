@@ -41,11 +41,15 @@ const server = new ApolloServer({
     const key = req.headers['public-key'];
     const token = req.headers.authorization;
 
-    if (!key || key !== process.env.publicKey) {
-      throw new Error('Public Key is not valid');
-    }
-
-    if (!token || !verify(token, process.env.privateKey, {})) {
+    try {
+      if (token) {
+        if (!verify(token, process.env.privateKey)) {
+          throw new Error('Unauthorized');
+        }
+      } else if (!key || key !== process.env.publicKey) {
+        throw new Error('Public Key is not valid');
+      }
+    } catch (error) {
       throw new Error('Unauthorized');
     }
   }
