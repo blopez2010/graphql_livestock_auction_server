@@ -1,5 +1,6 @@
 const db = require('../models');
 const { itemsAttributes: attributes } = require('../constants');
+const sequelize = require('sequelize');
 
 module.exports = {
   allItems: (parent, args) => db.item.findAll({ attributes }),
@@ -17,5 +18,19 @@ module.exports = {
       where: {
         ownerId
       }
-    })
+    }),
+  getItemsByEvent: (parent, { year }) => {
+    return db.item.findAll({
+      attributes,
+      include: [
+        {
+          model: db.event,
+          where: sequelize.where(
+            sequelize.fn('YEAR', sequelize.col('event.createdAt')),
+            year
+          )
+        }
+      ]
+    });
+  }
 };

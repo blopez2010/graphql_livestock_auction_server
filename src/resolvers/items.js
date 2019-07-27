@@ -1,8 +1,14 @@
 const db = require('../models');
+const { itemsAttributes: attributes } = require('../constants');
 
 module.exports = {
   createItem: async (parent, { input }) => {
-    const maxOrdinal = await db.item.max('ordinal');
+    const items = await db.item.findAll({
+      attributes: ['ordinal'],
+      where: { eventId: input.eventId }
+    });
+    const maxOrdinal =
+      items && items.length > 0 ? Math.max(...items.map(x => x.ordinal)) : 0;
 
     const result = await db.item
       .create({ ...input, ordinal: maxOrdinal + 1 })
@@ -15,6 +21,8 @@ module.exports = {
 
     return result;
   },
-  updateItem: (parent, { id, input }) =>
-    db.item.update(input, { where: { id } })
+  updateItem: async (parent, { id, input }) => {
+    await db.item.update(input, { where: { id } });
+    return await db.item.findOne({ attributes, where: { id } });
+  }
 };

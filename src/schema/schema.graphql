@@ -6,6 +6,7 @@ type Query {
   allPeople: [People!]!
   findPeopleByName(name: String!): [People!]!
   allItems: [Item!]!
+  getItemsByEvent(year: Int!): [Item!]
   getItemByOrdinal(ordinal: Int!, eventId: String!): Item!
   getItemsByOwner(ownerId: String!): [Item!]!
   allTransactions: [Transaction!]!
@@ -168,7 +169,7 @@ type People implements Entity {
 type Item implements Entity {
   id: ID!
   event: Event!
-  ordinal: Int!
+  ordinal: Int
   description: String
   externalIdentifier: String
   owner: People!

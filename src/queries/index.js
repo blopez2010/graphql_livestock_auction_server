@@ -1,6 +1,11 @@
 const { allEvents, getEventByYear } = require('./events');
 const { allPeople, findPeopleByName } = require('./people');
-const { allItems, getItemByOrdinal, getItemsByOwner } = require('./items');
+const {
+  allItems,
+  getItemByOrdinal,
+  getItemsByOwner,
+  getItemsByEvent
+} = require('./items');
 const {
   allTransactions,
   getTransactionsByBuyer,
@@ -15,6 +20,7 @@ module.exports = {
   findPeopleByName,
   allItems,
   getItemByOrdinal,
+  getItemsByEvent,
   getItemsByOwner,
   allTransactions,
   getTransactionsByBuyer,
