@@ -23,7 +23,8 @@ module.exports = {
     const result = await db.transaction.findOne({
       attributes,
       where: {
-        itemId: input.itemId
+        itemId: input.itemId,
+        isLastBuyer: true
       }
     });
     if (result) {

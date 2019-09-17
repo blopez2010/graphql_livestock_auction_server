@@ -12,7 +12,10 @@ type Query {
   allTransactions: [Transaction!]!
   getTransactionsByBuyer(name: String!): [Transaction!]!
   getTransactionsByEvent(eventId: String!): [Transaction!]!
-  getTotalsByEvent(eventId: String!): Float!
+  getTotalsByEvent(eventId: String!): TotalAmountPayload!
+  getActiveEvent: Event!
+  getItemsCountDown(eventId: String!): ItemsCountDownPayload!
+  getTotalItems(eventId: String!): TotalItemsPayload!
 }
 
 type Mutation {
@@ -98,6 +101,7 @@ input CreateTransactionInput {
   eventId: String!
   itemId: String!
   buyerId: String!
+  description: String
   amount: Float!
   isDonated: Boolean!
   isLastBuyer: Boolean!
@@ -113,6 +117,7 @@ input UpdateTransactionInput {
   eventId: String
   itemId: String
   buyerId: String
+  description: String
   amount: Float
   paymentDate: Date
   isDonated: Boolean
@@ -137,6 +142,18 @@ type CreateItemPayload implements PayloadBase {
 type CreateTransactionPayload implements PayloadBase {
   data: Transaction
   error: Error
+}
+
+type TotalAmountPayload {
+  total: Float!
+}
+
+type ItemsCountDownPayload {
+  count: Int!
+}
+
+type TotalItemsPayload {
+  count: Int!
 }
 
 interface Entity {
@@ -182,6 +199,7 @@ type Transaction implements Entity {
   event: Event!
   item: Item!
   buyer: People!
+  description: String
   amount: Float!
   isDonated: Boolean!
   isPayed: Boolean!

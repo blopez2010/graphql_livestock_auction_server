@@ -1,0 +1,32 @@
+org: merlin2010
+app: myapp
+service: auction-server
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: us-east-1
+  vpc:
+    securityGroupIds:
+      - sg-0ea2ccb06a0828282
+    subnetIds:
+      - subnet-cdf7d1aa
+      - subnet-4080984f
+  environment:
+    NODE_ENV: production
+functions:
+  graphql:
+    # this is formatted as <FILENAME>.<HANDLER>
+    handler: src/graphql.handler
+    events:
+    - http:
+        path: graphql
+        method: post
+        cors: true
+    - http:
+        path: graphql
+        method: get
+        cors: true
+    - http:
+        path: playground
+        method: get
+        cors: true

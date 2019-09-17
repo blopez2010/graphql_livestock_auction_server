@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         references: 'people',
         referencesKey: 'id'
       },
+      description: DataTypes.STRING,
       amount: { type: DataTypes.FLOAT, allowNull: false },
       isDonated: DataTypes.BOOLEAN,
       isPayed: DataTypes.BOOLEAN,

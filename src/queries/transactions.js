@@ -16,7 +16,8 @@ const attributes = [
   'updatedAt',
   'eventId',
   'itemId',
-  'buyerId'
+  'buyerId',
+  'description'
 ];
 
 module.exports = {
@@ -45,14 +46,17 @@ module.exports = {
       }
     });
   },
-  getTotalsByEvent: (parent, { eventId }) => {
-    return db.transaction
-      .findAll({
-        attributes,
-        where: {
-          eventId
-        }
-      })
-      .sum('amount');
+  getTotalsByEvent: async (parent, { eventId }) => {
+    const result = await db.transaction.findAll({
+      attributes: [
+        [sequelize.fn('sum', sequelize.col('amount')), 'total']
+      ],
+      raw: true,
+      where: {
+        eventId
+      }
+    });
+
+    return { total: result[0].total };
   }
 };

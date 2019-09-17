@@ -18,12 +18,18 @@
     "freezeTableName": true
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "iCsm1jbs3sPTKLRrbviM",
+    "database": "livestock_auction",
+    "host": "livestockauctiondb.cpsntqfc0t3f.us-east-1.rds.amazonaws.com",
+    "port": 3306,
     "dialect": "mysql",
+    "dialectOptions": {
+      "ssl": "Amazon RDS"
+    },
+    "pool": { "maxConnections": 5, "maxIdleTime": 30 },
     "operatorsAliases": false,
-    "freezeTableName": true
+    "freezeTableName": true,
+    "logging": "console.log"
   }
 }

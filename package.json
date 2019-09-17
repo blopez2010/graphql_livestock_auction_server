@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "apollo-server": "^2.6.4",
+    "apollo-server-lambda": "^2.8.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-3": "^6.24.1",
