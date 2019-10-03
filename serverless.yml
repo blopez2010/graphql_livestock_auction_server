@@ -13,6 +13,9 @@ provider:
       - subnet-4080984f
   environment:
     NODE_ENV: production
+    privateKey: 7d2a98b2d7dd4affa3f92fe1fe2dc1d0
+    publicKey: 6289bc3ad654471a82cf76d3661f7ef0
+    password: 123quesitoStop
 functions:
   graphql:
     # this is formatted as <FILENAME>.<HANDLER>

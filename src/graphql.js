@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server-lambda');
+const { ApolloServer, makeExecutableSchema } = require('apollo-server-lambda');
 const { importSchema } = require('graphql-import');
 const { GraphQLScalarType } = require('graphql');
 const { verify } = require('jsonwebtoken');
@@ -37,6 +37,10 @@ const schema = makeExecutableSchema({
 
 const server = new ApolloServer({
   schema,
+  cors: {
+    origin: '*',
+    credentials: true
+  },
   context: ({ event, context }) => {
     console.log('HEADERS INFO:', event.headers);
     const key = event.headers['public-key'];

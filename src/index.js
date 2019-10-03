@@ -37,6 +37,10 @@ const schema = makeExecutableSchema({
 
 const server = new ApolloServer({
   schema,
+  cors: {
+    origin: '*',
+    credentials: true
+  },
   context: ({ req }) => {
     const key = req.headers['public-key'];
     const token = req.headers.authorization;
