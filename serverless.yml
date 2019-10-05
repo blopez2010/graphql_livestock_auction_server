@@ -7,22 +7,22 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   # Load our secret environment variables based on the current stage.
   # Fallback to default if it is not in prod.
-  environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
+  environment: ${file(env.yml):${self:custom.stage}}
 provider:
   name: aws
   runtime: nodejs10.x
-  region: us-east-1
+  region: ${self:custom.environment.aws.${self:custom.stage}.region}
   vpc:
     securityGroupIds:
-      - sg-0ea2ccb06a0828282
+      - ${self:custom.environment.aws.${self:custom.stage}.securityGroup}
     subnetIds:
-      - subnet-cdf7d1aa
-      - subnet-4080984f
+      - ${self:custom.environment.aws.${self:custom.stage}.subnet1}
+      - ${self:custom.environment.aws.${self:custom.stage}.subnet2}
   environment:
     NODE_ENV: production
-    privateKey: ${self:custom.environment.publicKey}
-    publicKey: ${self:custom.environment.privateKey}
-    password: ${self:custom.environment.password}
+    privateKey: ${self:custom.environment.security.${self:custom.stage}.publicKey}
+    publicKey: ${self:custom.environment.security.${self:custom.stage}.privateKey}
+    password: ${self:custom.environment.security.${self:custom.stage}.password}
 functions:
   graphql:
     # this is formatted as <FILENAME>.<HANDLER>
