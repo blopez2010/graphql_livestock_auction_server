@@ -1,218 +1,233 @@
 scalar Date
 
 type Query {
-  allEvents: [Event!]!
-  getEventByYear(year: String!): Event
-  allPeople: [People!]!
-  findPeopleByName(name: String!): [People!]!
-  allItems: [Item!]!
-  getItemsByEvent(year: Int!): [Item!]
-  getItemByOrdinal(ordinal: Int!, eventId: String!): Item!
-  getItemsByOwner(ownerId: String!): [Item!]!
-  allTransactions: [Transaction!]!
-  getTransactionsByBuyer(name: String!): [Transaction!]!
-  getTransactionsByEvent(eventId: String!): [Transaction!]!
-  getTotalsByEvent(eventId: String!): TotalAmountPayload!
-  getActiveEvent: Event!
-  getItemsCountDown(eventId: String!): ItemsCountDownPayload!
-  getTotalItems(eventId: String!): TotalItemsPayload!
+	allEvents: [Event!]!
+	getEventByYear(year: String!): Event
+	allPeople: [People!]!
+	allPeoplePaginated(name: String, offset: Int, limit: Int): PeoplePaginationResultPayload!
+	findPeopleByName(name: String!): [People!]!
+	allItems: [Item!]!
+	getItemsByEvent(year: Int!): [Item!]
+	getItemByOrdinal(ordinal: Int!, eventId: String!): Item!
+	getItemsByOwner(ownerId: String!): [Item!]!
+	allTransactions: [Transaction!]!
+	getTransactionsByBuyer(name: String!): [Transaction!]!
+	getTransactionsByEvent(eventId: String!): [Transaction!]!
+	getTotalsByEvent(eventId: String!): TotalAmountPayload!
+	getActiveEvent: Event!
+	getItemsCountDown(eventId: String!): ItemsCountDownPayload!
+	getTotalItems(eventId: String!): TotalItemsPayload!
 }
 
 type Mutation {
-  createEvent(input: CreateEventInput!): CreateEventPayload
-  deleteEvent(id: String!): Event
-  updateEvent(id: String!, input: UpdateEventInput!): Event
-  createPeople(input: CreatePeopleInput!): CreatePeoplePayload
-  updatePeople(id: String!, input: UpdatePeopleInput): People
-  createItem(input: CreateItemInput!): CreateItemPayload
-  updateItem(id: String!, input: UpdateItemInput!): Item
-  createTransaction(input: CreateTransactionInput!): CreateTransactionPayload
-  updateTransaction(id: String!, input: UpdateTransactionInput!): Transaction
-  payTransaction(id: String!, input: PayTransactionInput!): Transaction
-  login(input: LoginInput!): LoginPayload
+	createEvent(input: CreateEventInput!): CreateEventPayload
+	deleteEvent(id: String!): Event
+	updateEvent(id: String!, input: UpdateEventInput!): Event
+	createPeople(input: CreatePeopleInput!): CreatePeoplePayload
+	updatePeople(id: String!, input: UpdatePeopleInput): People
+	createItem(input: CreateItemInput!): CreateItemPayload
+	updateItem(id: String!, input: UpdateItemInput!): Item
+	createTransaction(input: CreateTransactionInput!): CreateTransactionPayload
+	updateTransaction(id: String!, input: UpdateTransactionInput!): Transaction
+	payTransaction(id: String!, input: PayTransactionInput!): Transaction
+	login(input: LoginInput!): LoginPayload
 }
 
 input LoginInput {
-  user: String!
-  password: String!
+	user: String!
+	password: String!
 }
 
 type LoginPayload {
-  user: String!
-  token: String!
+	user: String!
+	token: String!
 }
 
 input CreateEventInput {
-  name: String!
-  description: String
-  year: Int!
+	name: String!
+	description: String
+	year: Int!
 }
 
 input UpdateEventInput {
-  name: String
-  description: String
+	name: String
+	description: String
 }
 
 input CreateItemInput {
-  eventId: String!
-  description: String
-  externalIdentifier: String
-  ownerId: String!
+	eventId: String!
+	description: String
+	externalIdentifier: String
+	ownerId: String!
 }
 
 input UpdateItemInput {
-  eventId: String
-  description: String
-  externalIdentifier: String
-  ownerId: String
-  ordinal: Int
+	eventId: String
+	description: String
+	externalIdentifier: String
+	ownerId: String
+	ordinal: Int
 }
 
 type Error {
-  message: String!
-  status: Int!
+	message: String!
+	status: Int!
 }
 
 interface PayloadBase {
-  error: Error
+	error: Error
+}
+
+interface PaginationPayloadBase {
+  totalCount: Int!
+  offset: Int!
+  limit: Int!
 }
 
 input UpdatePeopleInput {
-  name: String
-  nickname: String
-  phoneNumber: String
-  externalIdentifier: String
-  address: String,
-  isBanned: Boolean
-  bannedDescription: String
+	name: String
+	nickname: String
+	phoneNumber: String
+	externalIdentifier: String
+	address: String
+	isBanned: Boolean
+	bannedDescription: String
 }
 
 input CreatePeopleInput {
-  name: String!
-  nickname: String
-  phoneNumber: String
-  externalIdentifier: String
-  address: String!
-  isBanned: Boolean,
-  bannedDescription: String
+	name: String!
+	nickname: String
+	phoneNumber: String
+	externalIdentifier: String
+	address: String!
+	isBanned: Boolean
+	bannedDescription: String
 }
 
 input CreateTransactionInput {
-  eventId: String!
-  itemId: String!
-  buyerId: String!
-  description: String
-  amount: Float!
-  isDonated: Boolean!
-  isLastBuyer: Boolean!
+	eventId: String!
+	itemId: String!
+	buyerId: String!
+	description: String
+	amount: Float!
+	isDonated: Boolean!
+	isLastBuyer: Boolean!
 }
 
 input PayTransactionInput {
-  paymentDate: Date
-  paymentMethod: PaymentMethods
-  paymentReference: String
+	paymentDate: Date
+	paymentMethod: PaymentMethods
+	paymentReference: String
 }
 
 input UpdateTransactionInput {
-  eventId: String
-  itemId: String
-  buyerId: String
-  description: String
-  amount: Float
-  paymentDate: Date
-  isDonated: Boolean
-  isLastBuyer: Boolean
+	eventId: String
+	itemId: String
+	buyerId: String
+	description: String
+	amount: Float
+	paymentDate: Date
+	isDonated: Boolean
+	isLastBuyer: Boolean
 }
 
 type CreateEventPayload implements PayloadBase {
-  data: Event
-  error: Error
+	data: Event
+	error: Error
 }
 
 type CreatePeoplePayload implements PayloadBase {
-  data: People
-  error: Error
+	data: People
+	error: Error
 }
 
 type CreateItemPayload implements PayloadBase {
-  data: Item
-  error: Error
+	data: Item
+	error: Error
 }
 
 type CreateTransactionPayload implements PayloadBase {
-  data: Transaction
-  error: Error
+	data: Transaction
+	error: Error
+}
+
+type PeoplePaginationResultPayload implements PaginationPayloadBase & PayloadBase {
+	people: [People!]
+	error: Error
+	totalCount: Int!
+  offset: Int!
+  limit: Int!
 }
 
 type TotalAmountPayload {
-  total: Float!
+	total: Float!
 }
 
 type ItemsCountDownPayload {
-  count: Int!
+	count: Int!
 }
 
 type TotalItemsPayload {
-  count: Int!
+	count: Int!
 }
 
 interface Entity {
-  id: ID!
-  createdAt: Date
-  updatedAt: Date
+	id: ID!
+	createdAt: Date
+	updatedAt: Date
 }
 
 type Event implements Entity {
-  id: ID!
-  name: String!
-  description: String
-  createdAt: Date
-  updatedAt: Date
+	id: ID!
+	name: String!
+	description: String
+	createdAt: Date
+	updatedAt: Date
 }
 
 type People implements Entity {
-  id: ID!
-  name: String!
-  nickname: String
-  phoneNumber: String
-  externalIdentifier: String
-  address: String!
-  isBanned: Boolean!
-  bannedDescription: String
-  createdAt: Date
-  updatedAt: Date
+	id: ID!
+	name: String!
+	nickname: String
+	phoneNumber: String
+	externalIdentifier: String
+	address: String!
+	isBanned: Boolean!
+	bannedDescription: String
+	createdAt: Date
+	updatedAt: Date
 }
 
 type Item implements Entity {
-  id: ID!
-  event: Event!
-  ordinal: Int
-  description: String
-  externalIdentifier: String
-  owner: People!
-  createdAt: Date
-  updatedAt: Date
+	id: ID!
+	event: Event!
+	ordinal: Int
+	description: String
+	externalIdentifier: String
+	owner: People!
+	createdAt: Date
+	updatedAt: Date
 }
 
 type Transaction implements Entity {
-  id: ID!
-  event: Event!
-  item: Item!
-  buyer: People!
-  description: String
-  amount: Float!
-  isDonated: Boolean!
-  isPayed: Boolean!
-  isLastBuyer: Boolean!
-  paymentMethod: PaymentMethods
-  paymentReference: String
-  paymentDate: Date
-  createdAt: Date
-  updatedAt: Date
+	id: ID!
+	event: Event!
+	item: Item!
+	buyer: People!
+	description: String
+	amount: Float!
+	isDonated: Boolean!
+	isPayed: Boolean!
+	isLastBuyer: Boolean!
+	paymentMethod: PaymentMethods
+	paymentReference: String
+	paymentDate: Date
+	createdAt: Date
+	updatedAt: Date
 }
 
 enum PaymentMethods {
-  CASH
-  DEPOSIT
-  MONEY_CHECK
+	CASH
+	DEPOSIT
+	MONEY_CHECK
 }
