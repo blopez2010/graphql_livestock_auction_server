@@ -1,5 +1,5 @@
 const { allEvents, getEventByYear, getActiveEvent } = require('./events');
-const { allPeople, findPeopleByName } = require('./people');
+const { allPeoplePaginated, allPeople, findPeopleByName } = require('./people');
 const {
   allItems,
   getItemByOrdinal,
@@ -18,6 +18,7 @@ const {
 module.exports = {
   allEvents,
   getEventByYear,
+  allPeoplePaginated,
   allPeople,
   findPeopleByName,
   allItems,
