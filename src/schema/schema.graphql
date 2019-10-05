@@ -4,7 +4,7 @@ type Query {
 	allEvents: [Event!]!
 	getEventByYear(year: String!): Event
 	allPeople: [People!]!
-	allPeoplePaginated(name: String, offset: Int, limit: Int): PeoplePaginationResultPayload!
+	allPeoplePaginated(name: String, offset: Int!, limit: Int!): PeoplePaginationResultPayload!
 	findPeopleByName(name: String!): [People!]!
 	allItems: [Item!]!
 	getItemsByEvent(year: Int!): [Item!]

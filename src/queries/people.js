@@ -5,10 +5,6 @@ const { paginate } = require('./extensions');
 
 module.exports = {
   allPeoplePaginated: async (parent, { name, offset, limit }) => {
-    if (!offset || !limit) {
-      throw new Error('Missing offset and/or limit fields');      
-    }
-
     const where = name ? {
       name: {
         [Op.like]: `%${name.trim()}%`
