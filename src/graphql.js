@@ -37,24 +37,35 @@ const schema = makeExecutableSchema({
 
 const server = new ApolloServer({
   schema,
-  cors: {
-    origin: '*',
-    credentials: true
-  },
   context: ({ event, context }) => {
     console.log('HEADERS INFO:', event.headers);
+
     const key = event.headers['public-key'];
-    const token = event.headers.authorization;
+    console.log('KEY', key);
+
+    const token = event.headers['auth-lsa'];
+    console.log('TOKEN', token);
 
     try {
-      if (token) {
-        if (!verify(token, process.env.privateKey)) {
-          throw new Error('Unauthorized');
+      console.log('hasKey', !key);
+      console.log('Validation', key === process.env.publicKey, process.env.publicKey);
+      if (key && key === process.env.publicKey) {
+        if (token) {
+          if (!verify(token, process.env.privateKey)) {
+            console.error('Token is not valid according to private key', token);
+
+            throw new Error('Unauthorized');
+          }
+
+          console.log('Api access granted!');
         }
-      } else if (!key || key !== process.env.publicKey) {
+      }
+      else {
         throw new Error('Public Key is not valid');
       }
     } catch (error) {
+      console.error('Token is invalid', token, error);
+
       throw new Error('Unauthorized');
     }
 
@@ -67,4 +78,9 @@ const server = new ApolloServer({
   }
 });
 
-exports.handler = server.createHandler();
+exports.handler = server.createHandler({
+  cors: {
+    origin: '*',
+    credentials: true
+  }
+});

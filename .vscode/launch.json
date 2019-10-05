@@ -16,7 +16,9 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/src/index.js",
-      "envFile": "${workspaceFolder}/.env"
+      "env": {
+        "NODE_ENV": "development"
+      }
     }
   ]
 }

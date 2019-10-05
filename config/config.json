@@ -3,10 +3,11 @@
     "username": "root",
     "password": "rootroot",
     "database": "livestock_auction",
-    "host": "127.0.0.1",
+    "host": "localhost",
+    "port": 3306,
     "dialect": "mysql",
-    "operatorsAliases": false,
-    "freezeTableName": true
+    "freezeTableName": true,
+    "pool": { "idle": 1000, "max": 1 }
   },
   "test": {
     "username": "root",
@@ -14,22 +15,19 @@
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false,
     "freezeTableName": true
   },
   "production": {
     "username": "admin",
     "password": "iCsm1jbs3sPTKLRrbviM",
     "database": "livestock_auction",
-    "host": "livestockauctiondb.cpsntqfc0t3f.us-east-1.rds.amazonaws.com",
+    "host": "livestock-auction.cpsntqfc0t3f.us-east-1.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql",
     "dialectOptions": {
       "ssl": "Amazon RDS"
     },
     "pool": { "maxConnections": 5, "maxIdleTime": 30 },
-    "operatorsAliases": false,
-    "freezeTableName": true,
-    "logging": "console.log"
+    "freezeTableName": true
   }
 }

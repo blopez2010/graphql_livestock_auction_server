@@ -8,26 +8,8 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../../config/config.json')[env];
 const db = {};
 
-console.log('NO CONFIG', {
-  database: config.database,
-  username: config.username,
-  password: config.password,
-  host: config.host,
-  port: config.port,
-  dialect: config.dialect,
-  pool: { idle: 1000, max: 1 },
-  freezeTableName: config.freezeTableName
-});
-const sequelize = new Sequelize({
-  database: config.database,
-  username: config.username,
-  password: config.password,
-  host: config.host,
-  port: config.port,
-  dialect: config.dialect,
-  pool: { idle: 1000, max: 1 },
-  freezeTableName: config.freezeTableName
-});
+console.log('NO CONFIG', config);
+const sequelize = new Sequelize(config);
 
 fs
   .readdirSync(__dirname)

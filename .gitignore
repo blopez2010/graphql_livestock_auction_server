@@ -62,3 +62,5 @@ typings/
 
 # import xslx folder
 imports/
+
+.serverless/

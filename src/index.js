@@ -43,17 +43,21 @@ const server = new ApolloServer({
   },
   context: ({ req }) => {
     const key = req.headers['public-key'];
-    const token = req.headers.authorization;
+    const token = req.headers['auth-lsa'];
 
     try {
       if (token) {
         if (!verify(token, process.env.privateKey)) {
+          console.log('Token is not valid according to private key', token);
+
           throw new Error('Unauthorized');
         }
       } else if (!key || key !== process.env.publicKey) {
         throw new Error('Public Key is not valid');
       }
     } catch (error) {
+      console.log('Token is invalid', token, error);
+
       throw new Error('Unauthorized');
     }
   }
