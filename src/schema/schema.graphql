@@ -4,7 +4,7 @@ type Query {
 	allEvents: [Event!]!
 	getEventByYear(year: String!): Event
 	allPeople: [People!]!
-	allPeoplePaginated(name: String, offset: Int!, limit: Int!): PeoplePaginationResultPayload!
+	allPeoplePaginated(input: PeoplePaginationInput!): PeoplePaginationResultPayload!
 	findPeopleByName(name: String!): [People!]!
 	allItems: [Item!]!
 	getItemsByEvent(year: Int!): [Item!]
@@ -82,6 +82,19 @@ interface PaginationPayloadBase {
   totalCount: Int!
   offset: Int!
   limit: Int!
+}
+
+enum SortDirection {
+	ASC,
+	DESC
+}
+
+input PeoplePaginationInput {
+	name: String
+	offset: Int! 
+	limit: Int!
+	sortColumn: String!
+	sortDirection: SortDirection!
 }
 
 input UpdatePeopleInput {
