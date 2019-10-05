@@ -64,3 +64,5 @@ typings/
 imports/
 
 .serverless/
+
+env.yml

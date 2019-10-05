@@ -1,6 +1,13 @@
 org: merlin2010
 app: myapp
 service: auction-server
+custom:
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or fallsback to what we have set in the provider section.
+  stage: ${opt:stage, self:provider.stage}
+  # Load our secret environment variables based on the current stage.
+  # Fallback to default if it is not in prod.
+  environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
 provider:
   name: aws
   runtime: nodejs10.x
@@ -13,9 +20,9 @@ provider:
       - subnet-4080984f
   environment:
     NODE_ENV: production
-    privateKey: 7d2a98b2d7dd4affa3f92fe1fe2dc1d0
-    publicKey: 6289bc3ad654471a82cf76d3661f7ef0
-    password: 123quesitoStop
+    privateKey: ${self:custom.environment.publicKey}
+    publicKey: ${self:custom.environment.privateKey}
+    password: ${self:custom.environment.password}
 functions:
   graphql:
     # this is formatted as <FILENAME>.<HANDLER>
