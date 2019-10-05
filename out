@@ -1,1 +1,0 @@
-{"body":"{\"errors\":[{\"message\":\"Context creation failed: No headers.\",\"extensions\":{\"code\":\"INTERNAL_SERVER_ERROR\"}}]}\n","statusCode":500,"headers":{"Content-Type":"application/json","access-control-allow-credentials":"true","access-control-allow-origin":"*"}}

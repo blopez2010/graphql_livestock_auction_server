@@ -1,4 +1,0 @@
-sequelize model:create --name transaction --attributes id:string,amount:float,isDonated:boolean,isPayed:boolean,isLastBuyer:boolean,dateCreated:date,paymentMethod:enum:\{CASH,DEPOSIT,MONEY_CHECK\},paymentReference:string,paymentDate:date,dateUpdated:date
-sequelize model:create --name event --attributes id:string,name:string,description:string,dateCreated:date
-sequelize model:create --name item --attributes id:string,ordinal:number,description:string,externalIdentifier:string,dateCreated:date
-sequelize model:create --name person --attributes id:string,name:string,nickname:string,phoneNumber:string,externalIdentifier:string,address:string,dateCreated:date,isBanned:boolean,bannedDescription:string
