@@ -30,20 +30,13 @@ module.exports = {
 			offset
 		};
 	},
-	allPeople: (parent, args) => {
-		try {
-			return db.people.findAll();
-		} catch (err) {
-			console.log('ERROR GETTING PEOPLE', err);
-		}
-	},
-	findPeopleByName: (parent, { name }) => {
-		return db.people.findAll({
+	allPeople: () => db.people.findAll(),
+	findPeopleByName: (parent, { name }) =>
+		db.people.findAll({
 			where: {
 				name: {
 					[Op.like]: `%${name.trim()}%`
 				}
 			}
-		});
-	}
+		})
 };

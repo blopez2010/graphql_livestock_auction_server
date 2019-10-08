@@ -2,14 +2,7 @@ const db = require('../models');
 const sequelize = require('sequelize');
 
 module.exports = {
-  allEvents: (parent, args) => {
-    try {
-      console.log('GETTING EVENTS');
-      return db.event.findAll();
-    } catch (err) {
-      console.log('ERROR GETTING EVENTS', err);
-    }
-  },
+  allEvents: () => db.event.findAll(),
   getEventByYear: (parent, { year }) =>
     db.event.findOne({
       where: sequelize.where(
@@ -17,8 +10,8 @@ module.exports = {
         year
       )
     }),
-  getActiveEvent: async (parent, args) => {
-    const result = await db.event.findAll({});
+  getActiveEvent: async () => {
+    const result = await db.event.findAll();
 
     return result.sort((a, b) => {
       const date1 = b.createdAt;

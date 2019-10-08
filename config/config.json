@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
+    "username": "livestock",
     "password": "rootroot",
-    "database": "livestock_auction",
-    "host": "localhost",
+    "database": "mysql_81716_livestock",
+    "host": "my03.winhost.com",
     "port": 3306,
     "dialect": "mysql",
     "freezeTableName": true,
