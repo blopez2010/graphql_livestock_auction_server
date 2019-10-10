@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   item.associate = function(models) {
     item.hasMany(models.transaction);
-    item.belongsTo(models.people);
+    item.belongsTo(models.people, { as: 'people', foreignKey: 'ownerId' });
     item.belongsTo(models.event);
   };
 
