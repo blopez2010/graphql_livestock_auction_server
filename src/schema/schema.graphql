@@ -90,7 +90,7 @@ enum SortDirection {
 }
 
 input PeoplePaginationInput {
-	name: String
+	filter: String
 	offset: Int! 
 	limit: Int!
 	sortColumn: String!
