@@ -6,6 +6,7 @@ type Query {
 	allPeople: [People!]!
 	allPeoplePaginated(input: PeoplePaginationInput!): PeoplePaginationResultPayload!
 	findPeopleByName(name: String!): [People!]!
+	allItemsPaginated(input: ItemsPaginationInput!): ItemsPaginationResultPayload!
 	allItems: [Item!]!
 	getItemsByEvent(year: Int!): [Item!]
 	getItemByOrdinal(ordinal: Int!, eventId: String!): Item!
@@ -89,6 +90,15 @@ enum SortDirection {
 	DESC
 }
 
+input ItemsPaginationInput {
+	eventId: String!
+	filter: String
+	offset: Int! 
+	limit: Int!
+	sortColumn: String!
+	sortDirection: SortDirection!
+}
+
 input PeoplePaginationInput {
 	name: String
 	offset: Int! 
@@ -162,6 +172,14 @@ type CreateItemPayload implements PayloadBase {
 type CreateTransactionPayload implements PayloadBase {
 	data: Transaction
 	error: Error
+}
+
+type ItemsPaginationResultPayload implements PaginationPayloadBase & PayloadBase {
+	items: [Item!]
+	error: Error
+	totalCount: Int!
+  offset: Int!
+  limit: Int!
 }
 
 type PeoplePaginationResultPayload implements PaginationPayloadBase & PayloadBase {

@@ -6,7 +6,8 @@ const {
 	getItemsByOwner,
 	getItemsByEvent,
 	getItemsCountDown,
-	getTotalItems
+	getTotalItems,
+	allItemsPaginated
 } = require('./items');
 const { allTransactions, getTransactionsByBuyer, getTransactionsByEvent, getTotalsByEvent } = require('./transactions');
 
@@ -26,5 +27,6 @@ module.exports = {
 	getTotalsByEvent,
 	getActiveEvent,
 	getItemsCountDown,
-	getTotalItems
+	getTotalItems,
+	allItemsPaginated
 };

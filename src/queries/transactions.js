@@ -1,5 +1,5 @@
 const db = require('../models');
-const Person = require('../models/person');
+const People = require('../models/people');
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
@@ -27,7 +27,7 @@ module.exports = {
 			attributes,
 			include: [
 				{
-					model: Person,
+					model: People,
 					where: {
 						name: {
 							[Op.like]: `%${name.trim()}%`
