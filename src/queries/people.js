@@ -4,12 +4,17 @@ const Op = sequelize.Op;
 const { paginate, sortBy } = require('./extensions');
 
 module.exports = {
-	allPeoplePaginated: async (parent, { input: { name, offset, limit, sortColumn, sortDirection } }) => {
-		const where = name
+	allPeoplePaginated: async (parent, { input: { filter, offset, limit, sortColumn, sortDirection } }) => {
+		const where = filter
 			? {
-					name: {
-						[Op.like]: `%${name.trim()}%`
-					}
+					[Op.or]: [
+						{ name: { [Op.like]: `%${filter.trim()}%` } },
+						{ nickname: { [Op.like]: `%${filter.trim()}%` } },
+						{ phoneNumber: { [Op.like]: `%${filter.trim()}%` } },
+						{ externalIdentifier: { [Op.like]: `%${filter.trim()}%` } },
+						{ address: { [Op.like]: `%${filter.trim()}%` } },
+						{ bannedDescription: { [Op.like]: `%${filter.trim()}%` } },
+					]
 				}
 			: {};
 

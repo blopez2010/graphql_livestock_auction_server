@@ -100,7 +100,7 @@ input ItemsPaginationInput {
 }
 
 input PeoplePaginationInput {
-	name: String
+	filter: String
 	offset: Int! 
 	limit: Int!
 	sortColumn: String!
