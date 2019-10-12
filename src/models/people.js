@@ -12,13 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     isBanned: DataTypes.BOOLEAN,
     bannedDescription: DataTypes.STRING,
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    personId: DataTypes.NUMBER
-  }, {});
+    updatedAt: DataTypes.DATE
+  }, { freezeTableName: true, tableName: 'people' });
 
   people.associate = (models) => {
     people.hasMany(models.transaction);
-    people.hasMany(models.item);
+    people.hasMany(models.item, {
+      foreignKey: 'ownerId'
+    });
   }
 
   people.addHook('beforeCreate', (people, options) => {

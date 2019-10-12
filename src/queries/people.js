@@ -18,7 +18,7 @@ module.exports = {
 				}
 			: {};
 
-		const result = await db.people.findAll({
+		const people = await db.people.findAll({
 			where,
 			...sortBy(sortColumn, sortDirection),
 			...paginate({ page: offset, pageSize: limit })
@@ -29,7 +29,7 @@ module.exports = {
 		});
 
 		return {
-			people: result,
+			people,
 			totalCount,
 			limit,
 			offset

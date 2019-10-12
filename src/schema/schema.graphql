@@ -12,6 +12,7 @@ type Query {
 	getItemByOrdinal(ordinal: Int!, eventId: String!): Item!
 	getItemsByOwner(ownerId: String!): [Item!]!
 	allTransactions: [Transaction!]!
+	allTransactionsPaginated(input: TransactionPaginationInput!): TransactionPaginationResultPayload!
 	getTransactionsByBuyer(name: String!): [Transaction!]!
 	getTransactionsByEvent(eventId: String!): [Transaction!]!
 	getTotalsByEvent(eventId: String!): TotalAmountPayload!
@@ -107,6 +108,30 @@ input PeoplePaginationInput {
 	sortDirection: SortDirection!
 }
 
+input TransactionPaginationInput {
+	filters: TransactionFilters
+	offset: Int! 
+	limit: Int!
+	sortColumn: String!
+	sortDirection: SortDirection!
+}
+
+input TransactionFilters {
+	eventId: String
+	itemId: String
+	buyerId: String
+	description: String
+	amountFrom: Float
+	amountTo: Float
+	isDonated: Boolean
+	isPayed: Boolean
+	isLastBuyer: Boolean
+	paymentMethod: PaymentMethods
+	paymentReference: String
+	paymentDateFrom: Date
+	paymentDateTo: Date
+}
+
 input UpdatePeopleInput {
 	name: String
 	nickname: String
@@ -184,6 +209,14 @@ type ItemsPaginationResultPayload implements PaginationPayloadBase & PayloadBase
 
 type PeoplePaginationResultPayload implements PaginationPayloadBase & PayloadBase {
 	people: [People!]
+	error: Error
+	totalCount: Int!
+  offset: Int!
+  limit: Int!
+}
+
+type TransactionPaginationResultPayload implements PaginationPayloadBase & PayloadBase {
+	transactions: [Transaction!]
 	error: Error
 	totalCount: Int!
   offset: Int!

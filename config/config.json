@@ -7,7 +7,8 @@
     "port": 3306,
     "dialect": "mysql",
     "freezeTableName": true,
-    "pool": { "idle": 1000, "max": 1 }
+    "pool": { "idle": 1000, "max": 1 },
+    "debug": true
   },
   "test": {
     "username": "root",

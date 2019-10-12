@@ -9,7 +9,7 @@ const {
 	getTotalItems,
 	allItemsPaginated
 } = require('./items');
-const { allTransactions, getTransactionsByBuyer, getTransactionsByEvent, getTotalsByEvent } = require('./transactions');
+const { allTransactions, allTransactionsPaginated, getTransactionsByBuyer, getTransactionsByEvent, getTotalsByEvent } = require('./transactions');
 
 module.exports = {
 	allEvents,
@@ -24,6 +24,7 @@ module.exports = {
 	allTransactions,
 	getTransactionsByBuyer,
 	getTransactionsByEvent,
+	allTransactionsPaginated,
 	getTotalsByEvent,
 	getActiveEvent,
 	getItemsCountDown,
