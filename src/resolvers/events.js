@@ -1,27 +1,27 @@
 const db = require('../models');
 const sequelize = require('sequelize');
+const moment = require('moment');
 
 module.exports = {
   createEvent: async (parent, { input }) => {
-    const events = await db.event.findAll({
-      where: sequelize.where(
-        sequelize.fn('YEAR', sequelize.col('createdAt')),
-        input.year
-      )
-    });
-
-    if (events && events.length > 0) {
+    const { startDate, endDate } = input;
+    if (moment(startDate).diff(moment(), 'days') < 0) {
       return {
         error: {
-          message: 'Event is already in place',
+          message: 'Start date should be greater than current date',
           status: 400
         }
       };
     }
-
-    return await db.event.create(input).then(data => ({
-      data
-    }));
+    if (moment(endDate).diff(moment(startDate), 'days') < 0) {
+      return {
+        error: {
+          message: 'Start date should be lower than end date',
+          status: 400
+        }
+      };
+    }
+    return db.event.create(input).then(result => ({ data: result }));
   },
   deleteEvent: (parent, { id }) => {
     return db.event.findOne({ where: { id } }).then(result => {

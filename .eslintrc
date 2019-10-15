@@ -3,25 +3,30 @@
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "no-return-await": "off",
     "object-curly-newline": ["error", { "consistent": true }],
-    "function-paren-newline": ["error", "consistent"],
+    "function-paren-newline": ["error", "multiline-arguments"],
     "arrow-parens": ["error", "as-needed"],
     "no-console": 0,
     "no-underscore-dangle": 0,
-    "no-unused-vars": ["error", {
-      "argsIgnorePattern": "next"
-    }],
+    "no-unused-vars": "off",
     "no-use-before-define": ["error", {
       "variables": false
     }],
     "no-multi-str": 0,
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-param-reassign": "off",
+    "linebreak-style": "off",
+    "indent":"off",
+    "max-len": ["error", 120],
+    "implicit-arrow-linebreak": "off"
   },
   "env": {
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "es6": true
   },
   "parserOptions": {
-    "ecmaVersion": 8
+    "ecmaVersion": 9,
+    "sourceType": "module"
   },
   "extends": [
     "airbnb-base"
