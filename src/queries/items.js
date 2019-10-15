@@ -12,7 +12,7 @@ module.exports = {
 			eventId
 		};
 
-		const peopleModel = {
+		let peopleModel = {
 			model: db.people,
 			attributes: [ 'id' ]
 		};
