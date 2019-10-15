@@ -9,6 +9,15 @@
       "port": 3306,
       "server": "127.0.0.1",
       "username": "root"
+    },
+    {
+      "database": "mysql_81716_livestock",
+      "dialect": "MySQL",
+      "name": "Livestock Winhost",
+      "password": "rootroot",
+      "port": 3306,
+      "server": "my03.winhost.com",
+      "username": "livestock"
     }
   ]
 }

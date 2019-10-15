@@ -8,19 +8,11 @@ module.exports = (sequelize, DataTypes) => {
       id: { type: DataTypes.STRING, primaryKey: true },
       eventId: {
         type: DataTypes.STRING,
-        references: 'event',
+        references: 'events',
         referencesKey: 'id'
       },
-      itemId: {
-        type: DataTypes.STRING,
-        references: 'item',
-        referencesKey: 'id'
-      },
-      buyerId: {
-        type: DataTypes.STRING,
-        references: 'people',
-        referencesKey: 'id'
-      },
+      itemId: DataTypes.STRING,
+      buyerId: DataTypes.STRING,
       description: DataTypes.STRING,
       amount: { type: DataTypes.FLOAT, allowNull: false },
       isDonated: DataTypes.BOOLEAN,
@@ -32,13 +24,17 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE
     },
-    {}
+    { freezeTableName: true, tableName: 'transactions' }
   );
 
   transaction.associate = models => {
     transaction.belongsTo(models.event);
-    transaction.belongsTo(models.people);
-    transaction.belongsTo(models.item);
+    transaction.belongsTo(models.people, {
+      foreignKey: 'buyerId'
+    });
+    transaction.belongsTo(models.item, {
+      foreignKey: 'itemId'
+    });
   };
 
   transaction.addHook('beforeCreate', (transaction, options) => {

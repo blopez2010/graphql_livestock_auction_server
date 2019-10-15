@@ -1,7 +1,7 @@
 const db = require('../models');
 const { itemsAttributes: attributes } = require('../constants');
 const sequelize = require('sequelize');
-const { paginate, sortBy } = require('./extensions');
+let { paginate, sortBy } = require('./extensions');
 
 const Op = sequelize.Op;
 
@@ -12,9 +12,8 @@ module.exports = {
 			eventId
 		};
 
-		let peopleModel = {
+		const peopleModel = {
 			model: db.people,
-			as: 'people',
 			attributes: [ 'id' ]
 		};
 

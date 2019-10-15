@@ -6,11 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     'item',
     {
       id: { type: DataTypes.STRING, primaryKey: true },
-      ownerId: {
-        type: DataTypes.STRING,
-        references: 'people',
-        referencesKey: 'id'
-      },
+      ownerId: DataTypes.STRING,
       ordinal: { type: DataTypes.NUMBER, allowNull: false },
       description: DataTypes.STRING,
       externalIdentifier: DataTypes.STRING,
@@ -21,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   item.associate = function(models) {
     item.hasMany(models.transaction);
-    item.belongsTo(models.people, { as: 'people', foreignKey: 'ownerId' });
+    item.belongsTo(models.people, { foreignKey: 'ownerId' });
     item.belongsTo(models.event);
   };
 
