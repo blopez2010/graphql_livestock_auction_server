@@ -48,12 +48,15 @@ type LoginPayload {
 input CreateEventInput {
 	name: String!
 	description: String
-	year: Int!
+	startDate: Date!
+	endDate: Date!
 }
 
 input UpdateEventInput {
 	name: String
 	description: String
+	startDate: Date
+	endDate: Date
 }
 
 input CreateItemInput {
@@ -245,6 +248,8 @@ type Event implements Entity {
 	id: ID!
 	name: String!
 	description: String
+	startDate: Date
+	endDate: Date
 	createdAt: Date
 	updatedAt: Date
 }

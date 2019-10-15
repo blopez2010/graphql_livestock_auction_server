@@ -1,5 +1,5 @@
-const db = require('../models');
 const sequelize = require('sequelize');
+const db = require('../models');
 
 module.exports = {
   allEvents: () => db.event.findAll(),
@@ -19,11 +19,11 @@ module.exports = {
 
       if (date1 < date2) {
         return -1;
-      } else if (date1 === date2) {
-        return 0;
-      } else {
-        return 1;
       }
+      if (date1 === date2) {
+        return 0;
+      }
+      return 1;
     })[0];
   }
 };

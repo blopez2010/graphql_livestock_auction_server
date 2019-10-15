@@ -19,5 +19,6 @@
       "server": "my03.winhost.com",
       "username": "livestock"
     }
-  ]
+  ],
+  "eslint.enable": true
 }
