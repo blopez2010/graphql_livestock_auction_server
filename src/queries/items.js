@@ -64,7 +64,7 @@ module.exports = {
 		const result = await db.item.findAll({
 			attributes,
 			where,
-			...sortBy(sortColumn, sortDirection),
+			...sortBy(sortColumn, sortDirection, db),
 			...paginate({ page: offset, pageSize: limit }),
 			include: [ peopleModel ]
 		});
