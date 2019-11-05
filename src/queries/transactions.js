@@ -14,7 +14,7 @@ module.exports = {
 		const { filters, offset, limit, sortColumn, sortDirection } = args.input;
 		const {
 			eventId,
-			itemId,
+			itemOrdinal,
 			buyerId,
 			description,
 			amountFrom,
@@ -29,112 +29,74 @@ module.exports = {
 		} = filters;
 
 		//#region where clause
-		let where = {};
+		const where = [];
 
 		if (eventId) {
-			where = {
-				...where,
-				eventId
-			};
+			where.push(`(eventId = '${eventId}')`);
 		}
-
-		if (itemId) {
-			where = {
-				...where,
-				itemId
-			};
+		
+		if (itemOrdinal) {
+			where.push(`(itemOrdinal = ${itemOrdinal})`);
 		}
-
+		
 		if (buyerId) {
-			where = {
-				...where,
-				buyerId
-			};
+			where.push(`(buyerId = '${buyerId}')`);
 		}
-
+		
 		if (description) {
-			where = {
-				...where,
-				description
-			};
+			where.push(`(description LIKE '%${description}%')`);
 		}
 
 		if (amountFrom && amountTo) {
-			where = {
-				...where,
-				amount: { [Op.between]: [ amountFrom, amountTo ] }
-			};
+			where.push(`(amount BETWEEN ${amountFrom} AND ${amountTo})`);
 		} else if (amountFrom) {
-			where = {
-				...where,
-				amount: { [Op.gte]: amountFrom }
-			};
+			where.push(`(amount >= ${amountFrom})`);
 		} else if (amountTo) {
-			where = {
-				...where,
-				amount: { [Op.lte]: amountTo }
-			};
+			where.push(`(amount <= ${amountTo})`);
 		}
 
 		if (isDonated !== undefined) {
-			where = {
-				...where,
-				isDonated
-			};
+			where.push(`(isDonated = ${isDonated})`);
 		}
 		if (isPayed !== undefined) {
-			where = {
-				...where,
-				isPayed
-			};
+			where.push(`(isPayed = ${isPayed})`);
 		}
 		if (isLastBuyer !== undefined) {
-			where = {
-				...where,
-				isLastBuyer
-			};
+			where.push(`(isLastBuyer = ${isLastBuyer})`);
 		}
-
+		
 		if (paymentMethod) {
-			where = {
-				...where,
-				paymentMethod: {
-					[Op.like]: `%${paymentMethod}%`
-				}
-			};
+			where.push(`(paymentMethod LIKE '%${paymentMethod}%')`);
 		}
 		if (paymentReference) {
-			where = {
-				...where,
-				paymentReference: {
-					[Op.like]: `%${paymentReference}%`
-				}
-			};
+			where.push(`(paymentReference LIKE '%${paymentReference}%')`);
 		}
 		if (paymentDateFrom && paymentDateTo) {
-			where = {
-				...where,
-				paymentDate: {
-					[Op.between]: [ paymentDateFrom, paymentDateTo ]
-				}
-			};
+			where.push(`(paymentDate BETWEEN '${paymentDateFrom}%' AND '${paymentDateTo}%')`);
 		}
 		//#endregion
 
-		const transactions = await db.transaction.findAll({
-			attributes,
-			where,
-			...sortBy(sortColumn, sortDirection),
-			...paginate({ page: offset, pageSize: limit })
+		let query = `SELECT * from transactions_view WHERE`;
+		query = `${query} ${where.join(' AND ')}`;
+		query = `${query} ORDER BY ${sortColumn} ${sortDirection}`;
+		query = `${query} LIMIT ${offset * limit}, ${limit}`;
+
+		const transactions = await db.sequelize.query(query, {
+			type: sequelize.QueryTypes.SELECT,
+			raw: true
 		});
 
-		const totalCount = await db.transaction.count({
-			where
+		query = `SELECT COUNT(*) from transactions_view WHERE`
+		query = `${query} ${where.join(' AND ')}`;
+
+		const totalCount = await db.sequelize.query(query, {
+			type: sequelize.QueryTypes.SELECT,
+			raw: true
 		});
 
 		return {
 			transactions,
-			totalCount,
+			totalCount: totalCount[0]['COUNT(*)'],
 			limit,
 			offset
 		};
