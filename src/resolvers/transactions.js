@@ -94,7 +94,7 @@ module.exports = {
       input.paymentDate = moment(input.paymentDate).toDate();
     }
 
-    const result = await db.transaction.update(input, { where: { id } });
+    const result = await db.transaction.update({ ...input, isPayed: true }, { where: { id } });
     if (
       typeof result === 'object' &&
       !!result[0] &&
