@@ -26,17 +26,6 @@ module.exports = {
 					ordinal: parseInt(filter)
 				};
 			} else if (filter && filter !== '') {
-				where = {
-					[Op.or]: [
-						{ ...where },
-						{
-							description: {
-								[Op.like]: `%${filter.trim()}%`
-							}
-						}
-					]
-				};
-
 				//#region People queries
 				wherePeople = {
 					where: {
@@ -52,9 +41,27 @@ module.exports = {
 				});
 
 				if (filter && counter > 0) {
+					where = {
+						[Op.or]: [
+							{ ...where },
+							{
+								description: {
+									[Op.like]: `%${filter.trim()}%`
+								}
+							}
+						]
+					};
+
 					peopleModel = {
 						...peopleModel,
 						...wherePeople
+					};
+				} else {
+					where = {
+						...where,
+						description: {
+							[Op.like]: `%${filter.trim()}%`
+						}
 					};
 				}
 				//#endregion
@@ -64,7 +71,7 @@ module.exports = {
 		const result = await db.item.findAll({
 			attributes,
 			where,
-			...sortBy(sortColumn, sortDirection),
+			...sortBy(sortColumn, sortDirection, db),
 			...paginate({ page: offset, pageSize: limit }),
 			include: [ peopleModel ]
 		});
