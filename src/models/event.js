@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE
     },
-    {}
+    { tableName: 'events' }
   );
 
   event.associate = models => {
@@ -21,10 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   event.addHook('beforeCreate', (evt, options) => {
-    evt = {
-      ...evt,
-      id: v4()
-    };
+    evt.id = v4();
   });
   return event;
 };

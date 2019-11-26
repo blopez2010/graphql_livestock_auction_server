@@ -1,6 +1,6 @@
-const db = require('../models');
 const sequelize = require('sequelize');
 const moment = require('moment');
+const db = require('../models');
 
 module.exports = {
   createEvent: async (parent, { input }) => {
@@ -23,15 +23,15 @@ module.exports = {
     }
     return db.event.create(input).then(result => ({ data: result }));
   },
-  deleteEvent: (parent, { id }) => {
-    return db.event.findOne({ where: { id } }).then(result => {
+  deleteEvent: (parent, { id }) =>
+    db.event.findOne({ where: { id } }).then(result => {
       if (!result) {
         return null;
       }
       return db.event.destroy({ where: { id } }).then(() => ({ id }));
-    });
-  },
+    }),
   updateEvent: async (parent, { id, input }) => {
-    return await db.event.update(input, { where: { id } });
+    await db.event.update(input, { where: { id } });
+    return await db.event.findOne({ where: { id } });
   }
 };
