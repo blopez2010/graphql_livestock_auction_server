@@ -20,8 +20,8 @@ provider:
       - ${self:custom.environment.aws.${self:custom.stage}.subnet2}
   environment:
     NODE_ENV: production
-    privateKey: ${self:custom.environment.security.${self:custom.stage}.publicKey}
-    publicKey: ${self:custom.environment.security.${self:custom.stage}.privateKey}
+    privateKey: ${self:custom.environment.security.${self:custom.stage}.privateKey}
+    publicKey: ${self:custom.environment.security.${self:custom.stage}.publicKey}
     password: ${self:custom.environment.security.${self:custom.stage}.password}
 functions:
   graphql:
