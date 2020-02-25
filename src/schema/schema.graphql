@@ -15,6 +15,7 @@ type Query {
   allTransactionsPaginated(input: TransactionPaginationInput!): TransactionPaginationResultPayload!
   getTransactionsByBuyer(name: String!): [Transaction!]!
   getTransactionsByEvent(eventId: String!): [Transaction!]!
+  getTransactionsBuyersReport(eventId: String!): [TransactionPayload!]!
   getTotalsByEvent(eventId: String!): TotalAmountPayload!
   getActiveEvent: Event!
   getItemsCountDown(eventId: String!): ItemsCountDownPayload!
@@ -303,8 +304,10 @@ type TransactionPayload {
   itemOrdinal: Int
   ownerId: String
   ownerName: String
+  ownerNickname: String
   buyerId: String
   buyerName: String
+  buyerNickname: String
   description: String
   amount: Float!
   isDonated: Boolean!

@@ -132,5 +132,15 @@ module.exports = {
 		});
 
 		return { total: result[0].total };
+	},
+	getTransactionsBuyersReport: async (parent, { eventId }) => {
+		const query = `select * from transactions_view where eventId = '${eventId}'`;
+		
+		const result = await db.sequelize.query(query, {
+			type: sequelize.QueryTypes.SELECT,
+			raw: true
+		});
+
+		return result;
 	}
 };
