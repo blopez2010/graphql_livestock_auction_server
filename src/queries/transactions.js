@@ -142,5 +142,15 @@ module.exports = {
 		});
 
 		return result;
-	}
+	},
+	getTransactionsDebtorsReport: async (parent, { eventId }) => {
+		const query = `select * from transactions_view where eventId = '${eventId}' and isPayed=0`;
+		
+		const result = await db.sequelize.query(query, {
+			type: sequelize.QueryTypes.SELECT,
+			raw: true
+		});
+
+		return result;
+	},
 };

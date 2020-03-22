@@ -16,6 +16,7 @@ type Query {
   getTransactionsByBuyer(name: String!): [Transaction!]!
   getTransactionsByEvent(eventId: String!): [Transaction!]!
   getTransactionsBuyersReport(eventId: String!): [TransactionPayload!]!
+  getTransactionsDebtorsReport(eventId: String!): [TransactionPayload!]!
   getTotalsByEvent(eventId: String!): TotalAmountPayload!
   getActiveEvent: Event!
   getItemsCountDown(eventId: String!): ItemsCountDownPayload!
@@ -305,9 +306,13 @@ type TransactionPayload {
   ownerId: String
   ownerName: String
   ownerNickname: String
+  ownerPhoneNumber: String
+  ownerAddress: String
   buyerId: String
   buyerName: String
   buyerNickname: String
+  buyerPhoneNumber: String
+  buyerAddress: String
   description: String
   amount: Float!
   isDonated: Boolean!
