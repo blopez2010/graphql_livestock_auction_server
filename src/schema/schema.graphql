@@ -6,6 +6,7 @@ type Query {
   allPeople: [People!]!
   allPeoplePaginated(input: PeoplePaginationInput!): PeoplePaginationResultPayload!
   findPeopleByName(name: String!): [People!]!
+  getDonorsReport(eventId: String!): [DonorsPayload!]!
   allItemsPaginated(input: ItemsPaginationInput!): ItemsPaginationResultPayload!
   allItems: [Item!]!
   getItemsByEvent(year: Int!): [Item!]
@@ -295,6 +296,16 @@ type Transaction implements Entity {
   paymentDate: Date
   createdAt: Date
   updatedAt: Date
+}
+
+type DonorsPayload {
+  id: ID!
+  itemOrdinal: Int
+  itemDescription: String
+  ownerName: String
+  ownerNickname: String
+  ownerPhoneNumber: String
+  ownerAddress: String
 }
 
 type TransactionPayload {

@@ -1,13 +1,13 @@
 const { allEvents, getEventByYear, getActiveEvent } = require('./events');
-const { allPeoplePaginated, allPeople, findPeopleByName } = require('./people');
+const { allPeoplePaginated, allPeople, findPeopleByName, getDonorsReport } = require('./people');
 const {
-	allItems,
-	getItemByOrdinal,
-	getItemsByOwner,
-	getItemsByEvent,
-	getItemsCountDown,
-	getTotalItems,
-	allItemsPaginated
+  allItems,
+  getItemByOrdinal,
+  getItemsByOwner,
+  getItemsByEvent,
+  getItemsCountDown,
+  getTotalItems,
+  allItemsPaginated
 } = require('./items');
 const {
 	allTransactions,
