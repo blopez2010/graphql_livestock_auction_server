@@ -10,33 +10,35 @@ const {
   allItemsPaginated
 } = require('./items');
 const {
-  allTransactions,
-  allTransactionsPaginated,
-  getTransactionsByBuyer,
-  getTransactionsByEvent,
-  getTotalsByEvent,
-  getTransactionsBuyersReport
+	allTransactions,
+	allTransactionsPaginated,
+	getTransactionsByBuyer,
+	getTransactionsByEvent,
+	getTotalsByEvent,
+	getTransactionsBuyersReport,
+  getTransactionsDebtorsReport
 } = require('./transactions');
 
 module.exports = {
-  allEvents,
-  getEventByYear,
-  allPeoplePaginated,
-  allPeople,
-  findPeopleByName,
-  getDonorsReport,
-  allItems,
-  getItemByOrdinal,
-  getItemsByEvent,
-  getItemsByOwner,
-  allTransactions,
-  getTransactionsByBuyer,
-  getTransactionsByEvent,
-  allTransactionsPaginated,
-  getTransactionsBuyersReport,
-  getTotalsByEvent,
-  getActiveEvent,
-  getItemsCountDown,
-  getTotalItems,
-  allItemsPaginated
+	allEvents,
+	getEventByYear,
+	allPeoplePaginated,
+	allPeople,
+	findPeopleByName,
+	allItems,
+	getItemByOrdinal,
+	getItemsByEvent,
+	getItemsByOwner,
+	allTransactions,
+	getTransactionsByBuyer,
+	getTransactionsByEvent,
+	allTransactionsPaginated,
+	getTransactionsBuyersReport,
+	getTransactionsDebtorsReport,
+	getTotalsByEvent,
+	getActiveEvent,
+	getItemsCountDown,
+	getTotalItems,
+  allItemsPaginated,
+  getDonorsReport
 };
