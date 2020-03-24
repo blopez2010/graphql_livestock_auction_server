@@ -43,5 +43,26 @@ module.exports = {
 					[Op.like]: `%${name.trim()}%`
 				}
 			}
-		})
+		}),
+	getDonorsReport: async (parent, {eventId}) => {
+		const query = `
+			select 
+				i.id, 
+				p.name as ownerName, 
+				p.nickname as ownerNickname, 
+				p.phoneNumber as ownerPhoneNumber, 
+				p.address as ownerAddress,
+				i.ordinal as itemOrdinal,
+				i.description as itemDescription
+			from people as p inner join items as i on p.id = i.ownerId 
+			where i.eventId = '${eventId}'`;
+		
+		const result = await db.sequelize.query(query, {
+			type: sequelize.QueryTypes.SELECT,
+			raw: true
+		});
+
+		return result;
+	}
+	
 };
