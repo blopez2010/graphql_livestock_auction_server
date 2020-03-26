@@ -18,6 +18,7 @@ type Query {
   getTransactionsByEvent(eventId: String!): [Transaction!]!
   getTransactionsBuyersReport(eventId: String!): [TransactionPayload!]!
   getTransactionsDebtorsReport(eventId: String!): [TransactionPayload!]!
+  getTransactionsTotalsReport(startDate: Date, endDate: Date): [TransactionTotalsPayload!]!
   getTotalsByEvent(eventId: String!): TotalAmountPayload!
   getActiveEvent: Event!
   getItemsCountDown(eventId: String!): ItemsCountDownPayload!
@@ -333,6 +334,12 @@ type TransactionPayload {
   paymentReference: String
   paymentDate: Date
   transactionCreatedAt: Date
+}
+
+type TransactionTotalsPayload {
+  eventDate: String!
+  description: String!
+  total: Float!
 }
 
 enum PaymentMethods {

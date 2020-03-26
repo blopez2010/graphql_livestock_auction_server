@@ -22,8 +22,12 @@ const resolvers = {
     name: 'Date',
     description: 'A valid date value',
     serialize: value => value,
-    parseValue: value => new Date(value).toUTCString(),
-    parseLiteral: literal => new Date(literal.value).toUTCString()
+    parseValue: value => {
+      return new Date(value).toISOString();
+    },
+    parseLiteral: literal => {
+      return new Date(literal.value).toISOString();
+    }
   })
 };
 

@@ -153,4 +153,21 @@ module.exports = {
 
 		return result;
 	},
+	getTransactionsTotalsReport: async (parent, { startDate, endDate }) => {
+		const query = `
+			select 
+				CONCAT(YEAR(t.createdAt), '-', LPAD(MONTH(t.createdAt), 2, '0')) as eventDate, 
+				'Subasta Ganadera' as description, 
+				SUM(t.amount) as total from transactions as t
+			where t.createdAt between '${startDate}' and '${endDate}'
+			group by CONCAT(YEAR(t.createdAt), '-', LPAD(MONTH(t.createdAt), 2, '0')), 'Subasta Ganadera'
+		`;
+		
+		const result = await db.sequelize.query(query, {
+			type: sequelize.QueryTypes.SELECT,
+			raw: true
+		});
+
+		return result;
+	},
 };
