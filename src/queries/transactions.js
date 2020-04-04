@@ -156,7 +156,7 @@ module.exports = {
 	getTransactionsTotalsReport: async (parent, { startDate, endDate }) => {
 		const query = `
 			select 
-				CONCAT(YEAR(t.createdAt), '-', LPAD(MONTH(t.createdAt), 2, '0')) as eventDate, 
+				CONCAT(YEAR(t.createdAt), '-', LPAD(MONTH(t.createdAt), 2, '0'), '-01') as eventDate, 
 				'Subasta Ganadera' as description, 
 				SUM(t.amount) as total from transactions as t
 			where t.createdAt between '${startDate}' and '${endDate}'

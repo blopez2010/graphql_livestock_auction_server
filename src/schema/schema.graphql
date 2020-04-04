@@ -337,7 +337,7 @@ type TransactionPayload {
 }
 
 type TransactionTotalsPayload {
-  eventDate: String!
+  eventDate: Date!
   description: String!
   total: Float!
 }
