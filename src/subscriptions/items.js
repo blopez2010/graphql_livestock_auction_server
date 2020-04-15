@@ -1,9 +1,8 @@
 const pubsub = require('../utils/subscription');
-
-const ITEM_ADDED = 'ITEM_ADDED';
+const { actions } = require('../constants');
 
 module.exports = {
   itemAdded: {
-    subscribe: () => pubsub.asyncIterator([ITEM_ADDED]),
+    subscribe: () => pubsub.asyncIterator([actions.itemAdded]),
   },
 };

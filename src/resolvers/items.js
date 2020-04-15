@@ -1,8 +1,6 @@
 const pubsub = require('../utils/subscription');
 const db = require('../models');
-const { itemsAttributes: attributes } = require('../constants');
-
-const ITEM_ADDED = 'ITEM_ADDED';
+const { itemsAttributes: attributes, actions } = require('../constants');
 
 module.exports = {
   createItem: async (parent, { input }, context) => {
@@ -20,7 +18,7 @@ module.exports = {
       .catch(error => ({
         error,
       }));
-    pubsub.publish(ITEM_ADDED, { itemAdded: result.data });
+    pubsub.publish(actions.itemAdded, { itemAdded: result.data });
     return result;
   },
   updateItem: async (parent, { id, input }) => {
