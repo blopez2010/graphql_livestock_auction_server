@@ -38,6 +38,10 @@ type Mutation {
   login(input: LoginInput!): LoginPayload
 }
 
+type Subscription{
+  itemAdded: Item
+}
+
 input LoginInput {
   user: String!
   password: String!
