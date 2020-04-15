@@ -7,7 +7,7 @@ const {
   getItemsByEvent,
   getItemsCountDown,
   getTotalItems,
-  allItemsPaginated
+  allItemsPaginated,
 } = require('./items');
 const {
 	allTransactions,
@@ -42,5 +42,5 @@ module.exports = {
 	getItemsCountDown,
 	getTotalItems,
   allItemsPaginated,
-  getDonorsReport
+  getDonorsReport,
 };

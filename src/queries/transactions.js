@@ -1,9 +1,9 @@
+const sequelize = require('sequelize');
 const db = require('../models');
 const People = require('../models/people');
-const sequelize = require('sequelize');
-const Op = sequelize.Op;
+
+const { Op } = sequelize;
 const { transactionsAttributes } = require('../constants');
-const { paginate, sortBy } = require('./extensions');
 
 const attributes = transactionsAttributes;
 
