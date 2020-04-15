@@ -7,14 +7,18 @@ const path = require('path');
 
 const mutations = require('./resolvers');
 const queries = require('./queries');
+const subscriptions = require('./subscriptions');
 const { Item, Transaction } = require('./types');
 
 const resolvers = {
   Query: {
-    ...queries
+    ...queries,
   },
   Mutation: {
-    ...mutations
+    ...mutations,
+  },
+  Subscription: {
+    ...subscriptions,
   },
   ...Item,
   ...Transaction,
@@ -23,8 +27,8 @@ const resolvers = {
     description: 'A valid date value',
     serialize: value => value,
     parseValue: value => new Date(value).toUTCString(),
-    parseLiteral: literal => new Date(literal.value).toUTCString()
-  })
+    parseLiteral: literal => new Date(literal.value).toUTCString(),
+  }),
 };
 
 const filePath = path.join(__dirname, './schema/schema.graphql');
@@ -32,16 +36,20 @@ const typeDefs = importSchema(filePath);
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
-  resolverValidationOptions: { requireResolversForResolveType: false }
+  resolverValidationOptions: { requireResolversForResolveType: false },
 });
 
 const server = new ApolloServer({
   schema,
   cors: {
     origin: '*',
-    credentials: true
+    credentials: true,
   },
-  context: ({ req }) => {
+  context: async ({ req, connection }) => {
+    if (connection) {
+      return connection.context;
+    }
+
     const key = req.headers['public-key'];
     const token = req.headers['auth-lsa'];
 
@@ -60,7 +68,9 @@ const server = new ApolloServer({
 
       throw new Error('Unauthorized');
     }
-  }
+
+    return token;
+  },
 });
 
 server
