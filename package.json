@@ -9,7 +9,7 @@
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up"
   },
   "dependencies": {
-    "apollo-server": "^2.9.5",
+    "apollo-server": "^2.25.4",
     "apollo-server-lambda": "^2.9.5",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
